@@ -12,7 +12,9 @@ include_once 'api.php';
 
 
 $gains = getGain($conn,$U_id);
+
 $costs= getCost($conn,$U_id);
+
 $result = $gains - $costs;
 if ($result>0)
 {
@@ -26,6 +28,17 @@ else if ($result<=0){
 echo ("<script>console.log('profit: " . $profits . "');</script>");
 echo ("<script>console.log('loss: " . $loss . "');</script>");
 
+
+echo'   
+<br>
+<br>
+ <div id="chart_div" style="width: 800px; height: 500px;"></div>
+'
+
+
+
+;
+
 ?>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -38,17 +51,25 @@ echo ("<script>console.log('loss: " . $loss . "');</script>");
 
         var data = google.visualization.arrayToDataTable([
           ['', ''],
-          ['Sales', 800],
-          ['Costs', 200,],
+          
+          ['Sales',  parseInt('<?php echo $gains; ?>')],
+          ['Costs',  parseInt('<?php echo $costs; ?>')],
+
+        
   
         ]);
 
         var materialOptions = {
-          width: 900,
+          width: 500,
+          colors: ['red'],
+
+          chartArea:{left:10,top:1220,width:"100%",height:"100%"},
+
           legend: {position: 'none'},
 
 
           chart: {
+            
             title: 'Cost VS Sales',
 
           },
@@ -74,9 +95,3 @@ echo ("<script>console.log('loss: " . $loss . "');</script>");
         drawMaterialChart();
     };
 </script>
-<body>
-    <!--Div that will hold the pie chart-->
-<br><br>
-    <div id="chart_div" style="width: 800px; height: 500px;"></div>
-     </body>
-

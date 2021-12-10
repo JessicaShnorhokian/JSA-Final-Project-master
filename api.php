@@ -26,6 +26,13 @@ function pwdMatch($pwd, $pwdRepeat)
 //getCost
 
 //getGains
+function  saleperitem($conn, $item,$userid)
+{
+    $sql = " SELECT SUM(P_quantity) FROM sold_items WHERE P_id= $item and U_id= $userid ;";
+    $result = mysqli_query($conn,$sql);
+
+    return $result ;
+}
 
 function  gains($conn, $userid)
 {
