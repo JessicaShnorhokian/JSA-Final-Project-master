@@ -31,6 +31,7 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
 
 
     if (mysqli_num_rows($resultData) > 0) {
+       
         while ($row = $resultData->fetch_assoc()) {
 
             // echoing a product item to display
