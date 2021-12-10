@@ -2,13 +2,9 @@
 
 $serverName = "localhost";
 $dBUserName = "root";
-<<<<<<< HEAD
 $dBPassword = "";
 $dBName = "salessystem";
-=======
-$dBPassword = "root";
-$dBName = "salesSystem";
->>>>>>> afb6c9038671b9bb1f3c772f845a4f1d683ffd55
+
 
 
 $conn =  mysqli_connect($serverName, $dBUserName, $dBPassword, $dBName);
