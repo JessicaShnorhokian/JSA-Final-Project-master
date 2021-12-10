@@ -94,7 +94,7 @@ function createCustomer($conn, $name, $surname, $email, $number, $address, $user
     $sql = "INSERT INTO customer(C_name, C_surname, C_email, C_number, C_address, U_id) VALUES (?, ?, ?, ?, ?, ?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../index.php?error=stmtfailed2");
+        header("location: ./customer.php?error=stmtfailed2");
 
         exit();
     }
@@ -106,19 +106,25 @@ function createCustomer($conn, $name, $surname, $email, $number, $address, $user
     } else {
 
         mysqli_stmt_close($stmt);
-        header("location: ../index.php?error=none");
+        header("location: ./customer.php?error=none");
     }
 }
 
-function deleteCustomer($conn, $customername)
+function deleteCustomer($conn, $cid, $u_id)
 {
 
-    $cidExists = cidExists($conn, $customername);
+    $row = cidExists($conn, $cid, $u_id);
 
-    $sql = "DELETE FROM customer WHERE C_id=? ";
+    $sql = "DELETE FROM customer WHERE C_id=? and U_id=?";
     $stmt = $conn->stmt_init();
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $cidExists);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ./customer.php?error=stmtfailed2");
+        
+    }
+    $stmt->bind_param('ii', $cid, $u_id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ./customer.php?error=none");
 }
 
 function deleteProduct($conn, $P_id, $U_id)
@@ -190,15 +196,15 @@ function pidExists($conn, $p_id,$u_id)
 }
 
 
-function cidExists($conn, $customername)
+function cidExists($conn, $cid, $uid)
 {
-    $sql = "SELECT * FROM customer WHERE C_name = ? ;";
+    $sql = "SELECT * FROM customer WHERE C_id = ? and U_id = ? ;";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ./index.php?error=stmtfailed");
         exit();
     }
-    mysqli_stmt_bind_param($stmt, "s", $customername);
+    mysqli_stmt_bind_param($stmt, "ii", $cid, $uid);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
@@ -354,6 +360,43 @@ function updateProduct($conn, $p_id,$u_id, $name, $quantity, $costperitem ,$sell
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     header("location: ./homepage.php?error=none");
+    exit();
+
+}
+function updateCustomer($conn, $cid, $u_id, $name, $surname, $email, $number, $address)
+{
+    $row=cidExists($conn, $cid, $u_id);
+    
+    if(empty($name)){
+        $name=$row['C_name'];
+    }
+
+    if(empty($surname)){
+        $surname=$row['C_surname'];
+    }
+    if(empty($email)){
+        $email=$row["C_email"];
+    }
+    if(empty($number)){
+        $number=$row["C_number"];  
+    }
+
+    if(empty($address)){
+        $address=$row["C_address"];  
+    }
+   
+
+    $sql="UPDATE customer SET C_name=? , C_surname=?, C_email=?, C_number=?, C_address=? where U_id=? and C_id=?";
+    $stmt=mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql))
+    {
+        header("location: ./customer.php?error=smtngfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, 'sssssii', $name, $surname,$email,$number,$address,$u_id,$cid);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ./customer.php?error=none");
     exit();
 
 }

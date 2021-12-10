@@ -39,7 +39,7 @@
                 </div>
                 <div class="nav-links">          
                     <a href="homepage.php" >Inventory</a>
-                    <a href="#" >Customer</a>
+                    <a href="customer.php" >Customer</a>
                     <a href="#" >Orders</a>
                     <a href="reports.php">Reports</a>
                     <a href="# ">Account</a>
