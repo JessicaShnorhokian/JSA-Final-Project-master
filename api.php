@@ -56,6 +56,30 @@ function getGain($conn, $userid)
     
 }
 
+function getCustomerNumber($conn, $userid)
+{
+
+    $sql="SELECT count(C_id) as total FROM customer where U_id = $userid";
+
+    $result = mysqli_query($conn, $sql);
+    while ($row = mysqli_fetch_assoc($result))
+    { 
+       return $row['total'];
+    }
+    
+}
+function getOrderNumber($conn, $userid)
+{
+
+    $sql="SELECT count(O_id) as total FROM customer_order where U_id = $userid";
+
+    $result = mysqli_query($conn, $sql);
+    while ($row = mysqli_fetch_assoc($result))
+    { 
+       return $row['total'];
+    }
+    
+}
 function getCost($conn, $userid)
 {
 
