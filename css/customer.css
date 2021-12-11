@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.edit>div {
+    width: 20px;
+    height: 20px;
+}
+
+.edit-delete {
+    position: absolute;
+    bottom: 6%;
+    right: 4%;
+}
+
+#delete-container {
+    display: none;
+    position: fixed relative;
+    z-index: 1;
+    left: 30%;
+    top: 30%;
+    width: fit-content;
+    min-height: fit-content;
+    color: #000;
+    background-color: #fff;
+}
+
+#delete-container>h1 {
+    font-size: 1.4rem;
+}
+
+#delete-container>button {
+    left: 30%;
+    top: 30%;
+    bottom: 0.4rem;
+}
+
+.username {
+    display: none;
+    position: absolute;
+}
+
+.edit-im {
+    position: absolute;
+    bottom: 6%;
+    right: 16%;
+}
+
+.edit>div :hover {
+    cursor: pointer;
+}
+
+.product-desc {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding: 0px;
+    width: 80%;
+    height: auto;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.main-container {
+    margin: 7% 2% 0 3%;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: minmax(15rem, auto);
+    grid-auto-rows: 15rem;
+    grid-auto-columns: minmax(60%, auto);
+
+}
+
+.p-name {
+    font-family: inherit;
+    font-style: normal;
+    font-weight: 700;
+    color: var(--token-05828702-56c4-4b7f-843e-eab3a79a0bd7, rgb(0, 0, 0));
+    letter-spacing: -0.3px;
+    font-size: 150%;
+    margin-bottom: 10%;
+}
+
+.desc {
+    color: #7c7a7a;
+    font-size: 80%;
+}
+
+.image-box {
+    margin: 4% 0 0 5%;
+    height: 55%;
+    width: 90%;
+}
+
+.product-image {
+    border-radius: 8px;
+}
+
+.product-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #e0ccfc;
+    margin: 8%;
+    padding-bottom: 1%;
+    font-size: larger;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+.float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #7105ff;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 2px 2px 3px #999;
+}
+
+.my-float {
+    margin-top: 20px;
+}
