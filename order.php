@@ -6,7 +6,7 @@ $username = $_SESSION['username'];
 $U_id = $_SESSION['U_id'];
 echo ("<script>console.log('PHP: " . $username . "');</script>");
 ?>
-<link rel="stylesheet" href="./css/customer.css">
+<link rel="stylesheet" href="./css/order.css">
 <link rel="stylesheet" href="./css/bootstrap.css">
 
 
@@ -18,7 +18,7 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
      require_once 'db.php';
      echo ("<script>console.log('PHP: " . $username . "');</script>");
  
-     $sql = "SELECT  `P_id`,`P_quantiy`, `P_sellingprice`, `U_id`, `O_id`, `C_id` FROM `orderclass` where U_id= ?";
+     $sql = "SELECT  `P_id`,`P_quantiy`, `P_sellingprice`, `U_id`, `O_id` FROM `orderclass` where U_id= ?";
  
      $stmt = mysqli_stmt_init($conn);
      if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -39,14 +39,19 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
             <div class='image-box'>  
                
                      <div class='edit'>
+                     <div class='edit-im'>
+    
+                            <a></a>
+                                <img src='./resources/images/edit.png' class='edit-button' onclick='displayUpdateForm({$row['P_id']})' alt=''>
+                            </div>
                            
                             <div class='edit-delete'>
-                                <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='showDeleteForm({$row['C_id']})'>
+                                <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='showDeleteForm({$row['P_id']})'>
                             </div>        
                      </div>
                                 <div class='product-desc'  >
                                 
-                                <h1 class='p-name' > {$row['C_name']}  </h1>
+                                <h1 class='p-name' > {$row['P_id']}  </h1>
                                 <h3 class='desc'>Order : {$row['P_quantity']}</h3>
                                 <h3 class='desc'>Order Address: {$row['P_sellingprice']}</h3>
 
@@ -85,21 +90,18 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                 </h4>
             </div>
             <div class="modal-body">
-                <form action="./cadd.php" method="post" enctype="multipart/form-data">
+                <form action="./oadd.php" method="post" enctype="multipart/form-data">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="name" style="width:100%" placeholder="Enter order name!" required>
+                        <input type="text" class="form-control" name="P_id" style="width:100%" placeholder="Enter product id!" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="surname" style="width:100%" placeholder="Enter order surname!" required>
+                        <input type="text" class="form-control" name="P_quantity" style="width:100%" placeholder="Enter product quantity!" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="email" style="width:100%" placeholder="Enter order email!" required>
+                        <input type="text" class="form-control" name="P_sellingprice" style="width:100%" placeholder="Enter product selling price!" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="number" style="width:100%" placeholder="Enter order number!" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="address" style="width:100%" placeholder="Enter order address!" required>
+                        <input type="text" class="form-control" name="U_id" style="width:100%" placeholder="Enter user ID!" required>
                     </div>
                     <div class="form-group">
                         <button type="submit" name="submit" class="btn btn-default">Add</button>
@@ -139,8 +141,8 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                 </h4>
             </div>
             <div class="modal-body">
-                <form action="./cdelete.php" method="post" enctype="multipart/form-data">
-                <input type='text' name='C_id' id='pid' class='username' value="">
+                <form action="./odelete.php" method="post" enctype="multipart/form-data">
+                <input type='text' name='O_id' id='pid' class='username' value="">
                     <div class="form-group" id="delete-buttons">
                         <button type="submit" name="yes" id="delete-yes" class="btn btn-default">Yes</button>
                         <button type="cancel" name="no" id="delete-no" class="btn btn-default">No</button>

@@ -93,6 +93,27 @@ function createProduct($conn, $name, $quantity, $costperitem, $sellingprice, $fi
         header("location: ./homepage.php");
     }
 }
+function createOrder($conn, $P_id, $P_quantity, $P_sellingprice, $userid)
+{
+
+    $sql = "INSERT INTO inventory(P_id, P_quantity, P_sellingprice, U_id) VALUES (?, ?, ?, ?);";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ./order.php?error=stmtfailed2");
+
+        exit();
+    }
+    
+
+    mysqli_stmt_bind_param($stmt, "iids", $P_id, $P_quantity, $P_sellingprice, $userid);
+    if (!mysqli_stmt_execute($stmt)) {
+        print_r(mysqli_stmt_error($stmt));
+    } else {
+
+        mysqli_stmt_close($stmt);
+        header("location: ./order.php");
+    }
+}
 
 
 function createCustomer($conn, $name, $surname, $email, $number, $address, $userid)
