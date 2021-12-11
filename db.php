@@ -2,7 +2,7 @@
 
 $serverName = "localhost";
 $dBUserName = "root";
-$dBPassword = "";
+$dBPassword = "root";
 $dBName = "salessystem";
 
 

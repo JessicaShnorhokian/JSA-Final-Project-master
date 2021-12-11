@@ -95,7 +95,7 @@ var materialOptions = {
 
   chart: {
     
-    title: 'Cost VS Expenses',
+    title: 'Sales VS Expenses',
 
   },
 
