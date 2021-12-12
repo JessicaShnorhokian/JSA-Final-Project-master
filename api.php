@@ -120,7 +120,7 @@ function createProduct($conn, $name, $quantity, $costperitem, $sellingprice, $fi
 function createOrder($conn, $P_id, $P_quantity, $P_sellingprice, $userid)
 {
 
-    $sql = "INSERT INTO inventory(P_id, P_quantity, P_sellingprice, U_id) VALUES (?, ?, ?, ?);";
+    $sql = "INSERT INTO orderclass(P_id, P_quantity, P_sellingprice, U_id) VALUES (?, ?, ?, ?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ./order.php?error=stmtfailed2");
@@ -135,7 +135,7 @@ function createOrder($conn, $P_id, $P_quantity, $P_sellingprice, $userid)
     } else {
 
         mysqli_stmt_close($stmt);
-        header("location: ./order.php");
+        header("location: ./order.php?error=none");
     }
 }
 
