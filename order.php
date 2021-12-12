@@ -18,7 +18,7 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
      require_once 'db.php';
      echo ("<script>console.log('PHP: " . $username . "');</script>");
  
-     $sql = "SELECT  `P_id`,`P_quantiy`, `P_sellingprice`, `U_id`, `O_id` FROM `orderclass` where U_id= ?";
+     $sql = "SELECT  * FROM `orderclass` where U_id= ?";
  
      $stmt = mysqli_stmt_init($conn);
      if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -26,7 +26,7 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
      }
 
      mysqli_stmt_bind_param($stmt, "s", $U_id);
-    mysqli_stmt_execute($stmt);
+     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
 
@@ -92,7 +92,20 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
             <div class="modal-body">
                 <form action="./oadd.php" method="post" enctype="multipart/form-data">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="P_id" style="width:100%" placeholder="Enter product id!" required>
+                    <?php
+                    $pdo = new PDO('mysql:host=sql6.freesqldatabase.com; dbname=sql6458239', 'sql6458239', 'Tl1Xl4vVI5');
+                    $sql = "SELECT P_id, p_name FROM inventory";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $users = $stmt->fetchAll();
+                    ?>
+
+                    <select name="P_id" class="form-control" 
+                    >
+
+                    <?php foreach($users as $user): ?>
+        <option value="<?= $user['P_id']; ?>"><?= $user['p_name']; ?></option>
+    <?php endforeach; ?>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="P_quantity" style="width:100%" placeholder="Enter product quantity!" required>
@@ -103,6 +116,24 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                     <div class="form-group">
                         <input type="text" class="form-control" name="U_id" style="width:100%" placeholder="Enter user ID!" required>
                     </div>
+                   <div class="form-group">
+                   <?php
+                    $pdo = new PDO('mysql:host=sql6.freesqldatabase.com; dbname=sql6458239', 'sql6458239', 'Tl1Xl4vVI5');
+                    $sql = "SELECT C_id, C_name FROM customer";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $users = $stmt->fetchAll();
+                    ?>
+
+                    <select name="customer" 
+                    class="form-control" >
+
+                    <?php foreach($users as $user): ?>
+        <option value="<?= $user['C_id']; ?>"><?= $user['C_name']; ?></option>
+    <?php endforeach; ?>
+                     </select>
+                   </div>
+                    
                     <div class="form-group">
                         <button type="submit" name="submit" class="btn btn-default">Add</button>
                     </div>

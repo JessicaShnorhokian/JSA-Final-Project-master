@@ -20,7 +20,7 @@ $U_id = $_SESSION['U_id'];
     
     
 }else if (isset($_POST["cancel"])){ 
-    header("location: order.php");
+    header("location: order.php?ordercanceled");
     exit(); 
 }
 ?>
