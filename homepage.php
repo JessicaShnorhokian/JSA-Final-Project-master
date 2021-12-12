@@ -17,7 +17,7 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
     <?php
     require_once 'db.php';
     echo ("<script>console.log('PHP: " . $username . "');</script>");
-    $sql = "SELECT  `P_id`,`P_name`, `p_quantity`, `p_sellingprice`, `P_filename` FROM `inventory` where U_id= ?";
+    $sql = "SELECT  `P_id`,`P_name`, `p_quantity`, `p_sellingprice`, `P_filename`, 'U_id' FROM `inventory` where U_id= ?";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         echo "<script>console.log('error bro')</script>";
@@ -196,7 +196,7 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
             </div>
             <div class="modal-body">
                 <form action="./delete.php" method="post" enctype="multipart/form-data">
-                <input type='text' name='P_id' id='pid1' class='username' value="">
+                <input type='text' name='P_id' id='pid' class='username' value="">
                     <div class="form-group" id="delete-buttons">
                         <button type="submit" name="yes" id="delete-yes" class="btn btn-default">Yes</button>
                         <button type="cancel" name="no" id="delete-no" class="btn btn-default">No</button>

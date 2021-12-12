@@ -188,7 +188,7 @@ function deleteProduct($conn, $P_id, $U_id)
         header("location: ./homepage.php?error=stmtfailed2");
         exit();
     }
-    mysqli_stmt_bind_param($stmt, 'ss', $P_id, $U_id);
+    mysqli_stmt_bind_param($stmt, 'ii', $P_id, $U_id);
     mysqli_stmt_execute($stmt);
 
 
