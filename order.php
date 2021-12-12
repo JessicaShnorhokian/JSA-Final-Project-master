@@ -92,7 +92,20 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
             <div class="modal-body">
                 <form action="./oadd.php" method="post" enctype="multipart/form-data">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="P_id" style="width:100%" placeholder="Enter product id!" required>
+                    <?php
+                    $pdo = new PDO('mysql:host=sql6.freesqldatabase.com; dbname=sql6458239', 'sql6458239', 'Tl1Xl4vVI5');
+                    $sql = "SELECT P_id, p_name FROM inventory";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $users = $stmt->fetchAll();
+                    ?>
+
+                    <select name="P_id" class="form-control" 
+                    >
+
+                    <?php foreach($users as $user): ?>
+        <option value="<?= $user['P_id']; ?>"><?= $user['p_name']; ?></option>
+    <?php endforeach; ?>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="P_quantity" style="width:100%" placeholder="Enter product quantity!" required>
@@ -103,7 +116,8 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                     <div class="form-group">
                         <input type="text" class="form-control" name="U_id" style="width:100%" placeholder="Enter user ID!" required>
                     </div>
-                    <?php
+                   <div class="form-group">
+                   <?php
                     $pdo = new PDO('mysql:host=sql6.freesqldatabase.com; dbname=sql6458239', 'sql6458239', 'Tl1Xl4vVI5');
                     $sql = "SELECT C_id, C_name FROM customer";
                     $stmt = $pdo->prepare($sql);
@@ -112,18 +126,13 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                     ?>
 
                     <select name="customer" 
-                    style=" height: 30px; width: 100%;
-                    padding: 15px;
-                    margin: 5px 0 22px 0;
-                    display: inline-block;
-                    border: none;
-                    background: #f1f1f1;">
+                    class="form-control" >
 
                     <?php foreach($users as $user): ?>
         <option value="<?= $user['C_id']; ?>"><?= $user['C_name']; ?></option>
     <?php endforeach; ?>
-    
-</select>
+                     </select>
+                   </div>
                     
                     <div class="form-group">
                         <button type="submit" name="submit" class="btn btn-default">Add</button>

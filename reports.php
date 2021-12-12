@@ -29,7 +29,7 @@ echo'
 
 ';
 
-$db = new mysqli("localhost", "root", "root", "salesSystem");
+$db = ($conn);
 
 $result = $db->query("SELECT sold_items.P_id,sold_items.P_quantity,inventory.P_id,inventory.P_name
  FROM inventory JOIN sold_items ON sold_items.P_id= inventory.P_id WHERE sold_items.U_id = $U_id");
