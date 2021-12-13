@@ -382,6 +382,7 @@ function loginUsr($conn, $username, $pass)
 function updateProduct($conn, $p_id,$u_id, $name, $quantity, $costperitem ,$sellingprice,$filename)
 {
     $row=pidExists($conn, $p_id,$u_id);
+
     if(empty($name)){
         $name=$row['P_name'];
     }
@@ -397,11 +398,11 @@ function updateProduct($conn, $p_id,$u_id, $name, $quantity, $costperitem ,$sell
     }
 
     if(empty($filename)){
-        $filename=$row["P_filename"];  
+        $filename=$row["p_filename"];  
     }
     debug_to_console($filename);
 
-    $sql="UPDATE inventory SET P_name=? , p_quantity=?, p_costperitem=?, p_sellingprice=?, P_filename=? where U_id=? and P_id=?";
+    $sql="UPDATE inventory SET P_name=? , p_quantity=?, p_costperitem=?, p_sellingprice=?, p_filename=? where U_id=? and P_id=?";
     $stmt=mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$sql))
     {
