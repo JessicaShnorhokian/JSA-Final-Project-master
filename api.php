@@ -199,6 +199,22 @@ function deleteProduct($conn, $P_id, $U_id)
     
 }
 
+function deleteOrder($conn, $oid, $u_id)
+{
+
+    $row = oidExists($conn, $oid, $u_id);
+
+    $sql = "DELETE FROM orderclass WHERE O_id=? and U_id=?";
+    $stmt = $conn->stmt_init();
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ./order.php?error=stmtfailed2");
+        
+    }
+    $stmt->bind_param('ii', $oid, $u_id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ./order.php?error=none");
+}
 
 
 function uidExists($conn, $username)
@@ -272,7 +288,28 @@ function cidExists($conn, $cid, $uid)
 }
 
 
+function oidExists($conn, $oid, $uid)
+{
+    $sql = "SELECT * FROM orderclass WHERE O_id = ? and U_id = ? ;";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ./index.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "ii", $oid, $uid);
+    mysqli_stmt_execute($stmt);
 
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+        return $row;
+    } else {
+        $result = false;
+        return $result;
+    }
+
+    mysqli_stmt_close($stmt);
+}
 
 function createUser($conn, $name, $surname, $number, $address, $email, $username, $password, $storename)
 {

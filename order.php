@@ -39,14 +39,10 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
             <div class='image-box'>  
                
                      <div class='edit'>
-                     <div class='edit-im'>
-    
-                            <a></a>
-                                <img src='./resources/images/edit.png' class='edit-button' onclick='displayUpdateForm({$row['P_id']})' alt=''>
-                            </div>
+                
                            
                             <div class='edit-delete'>
-                                <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='showDeleteForm({$row['P_id']})'>
+                                <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='showDeleteForm({$row['O_id']})'>
                             </div>        
                      </div>
                                 <div class='product-desc'  >
@@ -69,8 +65,10 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
     ?>
      </div>
 </main>
-
-
+<!-- 
+<div class='edit-im'>
+                        <img src='./resources/images/edit.png' class='edit-button' onclick='displayUpdateForm({$row['O_id']})' alt=''>
+                            </div> -->
 <!-- Add button DOM element-->
 
 <a href="#" class="float">
@@ -99,13 +97,12 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                     $stmt->execute();
                     $users = $stmt->fetchAll();
                     ?>
-
-                    <select name="P_id" class="form-control" 
-                    >
-
-                    <?php foreach($users as $user): ?>
-        <option value="<?= $user['P_id']; ?>"><?= $user['p_name']; ?></option>
-    <?php endforeach; ?>
+                    <select name="P_id" class="form-control">
+                        <option value="" disabled="disabled" selected>--please select an option--</option>
+                        <?php foreach($users as $user): ?>
+                            <option value="<?= $user['P_id']; ?>"><?= $user['p_name']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="P_quantity" style="width:100%" placeholder="Enter product quantity!" required>
@@ -116,7 +113,7 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                     <div class="form-group">
                         <input type="text" class="form-control" name="U_id" style="width:100%" placeholder="Enter user ID!" required>
                     </div>
-                   <div class="form-group">
+                    <div class="form-group">
                    <?php
                     $pdo = new PDO('mysql:host=sql6.freesqldatabase.com; dbname=sql6458239', 'sql6458239', 'Tl1Xl4vVI5');
                     $sql = "SELECT C_id, C_name FROM customer";
@@ -127,12 +124,13 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
 
                     <select name="customer" 
                     class="form-control" >
+                    <option value="" disabled="disabled" selected>--please select an option--</option>
 
-                    <?php foreach($users as $user): ?>
-        <option value="<?= $user['C_id']; ?>"><?= $user['C_name']; ?></option>
-    <?php endforeach; ?>
-                     </select>
-                   </div>
+                        <?php foreach($users as $user): ?>
+                    <option value="<?= $user['C_id']; ?>"><?= $user['C_name']; ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                    </div>
                     
                     <div class="form-group">
                         <button type="submit" name="submit" class="btn btn-default">Add</button>
