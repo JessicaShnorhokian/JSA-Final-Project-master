@@ -18,7 +18,7 @@ require_once 'db.php';
         createCustomer($conn, $name, $surname, $email,$number,$address,$U_id);
         
     }else if (isset($_POST["cancel"])){ 
-        header("location: homepage.php");
+        header("location: customer.php");
         exit(); 
     }
     ?>

@@ -50,9 +50,11 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                      </div>
                                 <div class='product-desc'  >
                                 
-                                <h1 class='p-name' > {$row['C_name']}  </h1>
-                                <h3 class='desc'>Customer Number: {$row['C_number']}</h3>
-                                <h3 class='desc'>Customer Address: {$row['C_address']}</h3>
+                                <h1 class='p-name' id='fname' > {$row['C_name']}  </h1>
+                                <h1 class='p-name' id='sname' > {$row['C_surname']}  </h1>
+                                <h3 class='desc'> Number: {$row['C_number']}</h3>
+                                <h3 class='desc'> Address: {$row['C_address']}</h3>
+                                <h3 class='desc'> Email: {$row['C_email']}</h3>
 
 
                             </div>
@@ -97,7 +99,7 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                         <input type="text" class="form-control" name="surname" style="width:100%" placeholder="Enter customer surname!" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="email" style="width:100%" placeholder="Enter customer email!" required>
+                        <input type="email" class="form-control" name="email" style="width:100%" placeholder="Enter customer email!" required>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="number" style="width:100%" placeholder="Enter customer number!" required>
@@ -109,7 +111,7 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                         <button type="submit" name="submit" class="btn btn-default">Add</button>
                     </div>
                     <div class="form-group">
-                        <button type="cancel" name="cancel" class="btn btn-default" formnovalidate>Cancel</button>
+                        <button type="submit" name="cancel" class="btn btn-default" formnovalidate>Cancel</button>
                     </div>
 
 
@@ -150,7 +152,7 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                         <input type="text" class="form-control" name="surname" style="width:100%" placeholder="Enter customer surname!" >
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="email" style="width:100%" placeholder="Enter customer email!" >
+                        <input type="email" class="form-control" name="email" style="width:100%" placeholder="Enter customer email!" >
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="number" style="width:100%" placeholder="Enter customer number!">
