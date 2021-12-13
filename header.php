@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="./css/header.css">
     <title>Document</title>
 </head>
@@ -29,9 +30,9 @@
                 </div>
                 
                 <div class="search-container">
-                    <form action="result.php" method="post">
-                        <input type="text" class="search-input" name="search" placeholder="Product Name">
-                    <button class="search-button" name="searchbutton">
+                    <form action="./result.php" method="post">
+                        <input type="text" class="search-input" name="search" placeholder="Search">
+                        <button class="search-button" type="submit" name="searchbutton">
                             Search
                         </button>
                     </form>
