@@ -92,16 +92,19 @@ function getCost($conn, $userid)
     }
     
 }
-function getQuantity($conn, $userid)
+function getQuantity($conn, $userid, $productID)
 {
 
-    $sql="SELECT count(P_id) as total FROM inventory where U_id = $userid";
-
+    $sql="SELECT p_quantity FROM inventory where U_id = $userid and P_id = $productID";
     $result = mysqli_query($conn, $sql);
+    print_r($result);
+
     while ($row = mysqli_fetch_assoc($result))
-    { 
-       return $row['total'];
+    {   
+       return $row['p_quantity'];
     }
+    print_r($row);
+
     
 }
 
