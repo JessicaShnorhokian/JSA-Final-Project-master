@@ -23,11 +23,12 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
         echo "<script>console.log('error bro')</script>";
         
     }
-
+    
     mysqli_stmt_bind_param($stmt, "s", $U_id);
     mysqli_stmt_execute($stmt); 
-
+    
     $resultData = mysqli_stmt_get_result($stmt);
+    $result=1;
 
 
     if (mysqli_num_rows($resultData) > 0) {
