@@ -244,7 +244,7 @@ function uidExists($conn, $username)
         header("location: ./index.php?error=stmtfailed");
         exit();
     }
-    mysqli_stmt_bind_param($stmt, "i", $username);
+    mysqli_stmt_bind_param($stmt, "s", $username);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
@@ -341,68 +341,68 @@ function createUser($conn, $name, $surname, $number, $address, $email, $username
         exit();
     }
     $hashedpwd = password_hash($password, PASSWORD_DEFAULT);
-    mysqli_stmt_bind_param($stmt, "ssssssss", $name, $surname, $number, $address, $email, $username, $hashedpwd, $storename);
+    mysqli_stmt_bind_param($stmt, "ssisssss", $name, $surname, $number, $address, $email, $username, $hashedpwd, $storename);
     if (!mysqli_stmt_execute($stmt)) {
         print_r(mysqli_stmt_error($stmt));
     } else {
         mysqli_stmt_close($stmt);
-        $useridresult = mysqli_query($conn, "SELECT U_id FROM user ORDER BY U_id DESC LIMIT 1");
-        $obj = mysqli_fetch_object($useridresult);
-        $U_id = $obj->U_id;
-        $U_id = $U_id+1;
-        $emptyvar = "empty";
-        $emptynum = -1;
-    //inserting into inventory
-    $inventorysql = "INSERT INTO inventory(P_name, p_quantity, p_costperitem, p_sellingprice,p_filename,U_id) VALUES (?, ?, ?, ?, ?,?);";
-    $inventorystmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($inventorystmt, $inventorysql)){
-        header("location: ./index.php?error=stmtfailed3");
-        exit();
-    }
-    mysqli_stmt_bind_param($inventorystmt, "sssssi", $emptyvar, $emptyvar, $emptyvar,$emptyvar, $emptyvar,$U_id);
-    if (!mysqli_stmt_execute($inventorystmt)) {
-        print_r(mysqli_stmt_error($inventorystmt));
-    } else {
-        mysqli_stmt_close($inventorystmt);
+//         $useridresult = mysqli_query($conn, "SELECT U_id FROM user ORDER BY U_id DESC LIMIT 1");
+//         $obj = mysqli_fetch_object($useridresult);
+//         $U_id = $obj->U_id;
+//         $U_id = $U_id+1;
+//         $emptyvar = "empty";
+//         $emptynum = -1;
+//     //inserting into inventory
+//     $inventorysql = "INSERT INTO inventory(P_name, p_quantity, p_costperitem, p_sellingprice,p_filename,U_id) VALUES (?, ?, ?, ?, ?,?);";
+//     $inventorystmt = mysqli_stmt_init($conn);
+//     if (!mysqli_stmt_prepare($inventorystmt, $inventorysql)){
+//         header("location: ./index.php?error=stmtfailed3");
+//         exit();
+//     }
+//     mysqli_stmt_bind_param($inventorystmt, "sssssi", $emptyvar, $emptyvar, $emptyvar,$emptyvar, $emptyvar,$U_id);
+//     if (!mysqli_stmt_execute($inventorystmt)) {
+//         print_r(mysqli_stmt_error($inventorystmt));
+//     } else {
+//         mysqli_stmt_close($inventorystmt);
     
-         //inserting into sold items
-    $SoldItemsSql = "INSERT INTO sold_items(P_id, P_quantity, U_id) VALUES (-1, -1,{$U_id});";
-    if (!mysqli_query($conn, $SoldItemsSql)) {
-        header("location: ./index.php?error=stmtfailed5");
-      exit();
-    } else {
-        echo "<script>console.log(New record created successfully)</script>";
-        //inserting into order class
-        $OrderClassSql = "INSERT INTO orderclass(P_id, P_quantity, P_sellingprice, U_id) VALUES (-1, -1, -1,{$U_id});";
-    if (!mysqli_query($conn, $OrderClassSql)) {
-        header("location: ./index.php?error=stmtfailed6");
-      exit();
-    } else {
-        echo "<script>console.log(New record created successfully)</script>";
+//          //inserting into sold items
+//     $SoldItemsSql = "INSERT INTO sold_items(P_id, P_quantity, U_id) VALUES (-1, -1,{$U_id});";
+//     if (!mysqli_query($conn, $SoldItemsSql)) {
+//         header("location: ./index.php?error=stmtfailed5");
+//       exit();
+//     } else {
+//         echo "<script>console.log(New record created successfully)</script>";
+//         //inserting into order class
+//         $OrderClassSql = "INSERT INTO orderclass(P_id, P_quantity, P_sellingprice, U_id) VALUES (-1, -1, -1,{$U_id});";
+//     if (!mysqli_query($conn, $OrderClassSql)) {
+//         header("location: ./index.php?error=stmtfailed6");
+//       exit();
+//     } else {
+//         echo "<script>console.log(New record created successfully)</script>";
   
-        //inserting into customer order
-    $CustomerOrderSql = "INSERT INTO customer_order(O_id, C_id, O_totalprice, O_dateoforder, U_id) VALUES (-1, -1, -1, -1 , {$U_id});";
-    if (!mysqli_query($conn, $CustomerOrderSql)) {
-        header("location: ./index.php?error=stmtfailed7");
-      exit();
-    } else {
-        echo "<script>console.log(New record created successfully)</script>";
+//         //inserting into customer order
+//     $CustomerOrderSql = "INSERT INTO customer_order(O_id, C_id, O_totalprice, O_dateoforder, U_id) VALUES (-1, -1, -1, -1 , {$U_id});";
+//     if (!mysqli_query($conn, $CustomerOrderSql)) {
+//         header("location: ./index.php?error=stmtfailed7");
+//       exit();
+//     } else {
+//         echo "<script>console.log(New record created successfully)</script>";
   
-        //inserting into customer
-    $CustomerSql = "INSERT INTO customer(C_name, C_surname, C_email, C_number, C_address, U_id) VALUES (-1, -1, -1, -1, -1, {$U_id});";
-    if (!mysqli_query($conn, $CustomerSql)) {
-        header("location: ./index.php?error=stmtfailed8");
-      exit();
-    } else {
-        echo "<script>console.log(New record created successfully)</script>";
-    }
-    }
-}
+//         //inserting into customer
+//     $CustomerSql = "INSERT INTO customer(C_name, C_surname, C_email, C_number, C_address, U_id) VALUES (-1, -1, -1, -1, -1, {$U_id});";
+//     if (!mysqli_query($conn, $CustomerSql)) {
+//         header("location: ./index.php?error=stmtfailed8");
+//       exit();
+//     } else {
+//         echo "<script>console.log(New record created successfully)</script>";
+//     }
+//     }
+// }
 
-}
-}
+// }
+// }
 mysqli_close($conn);
-header("location: ./login.php");
+header("location: ./login.php?fromapi");
 }
 }
 
@@ -437,10 +437,10 @@ function getuserid($conn, $username)
 
 function loginUsr($conn, $username, $pass)
 {
-
+ 
     $uidExists = uidExists($conn, $username);
     print_r($uidExists);
-
+ 
     if ($uidExists === false) {
         header("location: ./login.php?error=wronglogin1");
         exit();
@@ -451,10 +451,7 @@ function loginUsr($conn, $username, $pass)
     $checkPwd = password_verify($pass, $pwdHashed);
 
     if ($checkPwd === false) {
-
-
         header("location: ./login.php?error=wronglogin2");
-
         exit();
     } else if ($checkPwd === true) {
         session_start();

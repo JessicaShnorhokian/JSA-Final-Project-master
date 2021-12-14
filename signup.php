@@ -10,8 +10,6 @@ if(isset($_POST["submit"])){
     $tel = $_POST["number"];
     $address = $_POST["address"];
     $email = $_POST["email"];
-    $email = $_POST["username"];
-
     $storename = $_POST["storename"];
     
 
@@ -20,17 +18,17 @@ if(isset($_POST["submit"])){
     
     
         if(pwdMatch($pwd, $pwdRepeat) !== false){
-            header("location: index.php?error=incorrectpassword");
+            header("location: index1.php?error=incorrectpassword");
             exit();
         }
 
         if(uidExists($conn, $username) !== false){
-            header("location: index.php?error=uidtaken");
+            header("location: index1.php?error=uidtaken");
             exit();
         }
         createUser($conn, $name, $surname, $tel,$address, $email,$username, $pwd, $storename);
 }else{
-    header("location: login.php");
+    header("location: login.php?wrongbutton");
     exit(); 
 }
 ?>

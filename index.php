@@ -17,7 +17,7 @@
         </div>
          <br> <br> <br> <br><br><br>
         <div class="form-container" id="formcon">
-        <form action="./index1.php" >
+        <form action="./index1.php" method="post">
         <button type="submit" name="submit" id="signup">Sign Up</button>
         </form>
         <br>
