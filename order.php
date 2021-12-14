@@ -115,13 +115,7 @@ $result=0;
                     </div>
 
                     
-                   <?php 
-                  
-                  include 'api.php';
-       
-                   //$quant= getQuantity($conn,$U_id,$user['P_id']);
-                   // debug_to_console($quant);
-                    ?> 
+              
                     <div class="form-group">
                         <input type="number" min="0" class="form-control" name="P_quantity" style="width:100%" max="" placeholder="Enter product quantity!" required>
                     </div>

@@ -14,12 +14,20 @@ $U_id = $_SESSION['U_id'];
     require_once 'api.php';
 
     
-    $quant= getQuantity($conn,$U_id,$P_id);
-     print_r($quant);
-    exit();
-    
 
-        createOrder($conn, $P_id, $P_quantity,1, $U_id);
+    $quant= getQuantity($conn,$U_id,$P_id);    
+
+    if($quant<$P_quantity)
+    {
+            echo"<script>window.alert('Quantity not enough, decrease quantity')</script>";
+            header("location: order.php?ordercanceled");
+        
+    }else{
+          createOrder($conn, $P_id, $P_quantity,1, $U_id);
+
+    }
+  
+
         
 
     
