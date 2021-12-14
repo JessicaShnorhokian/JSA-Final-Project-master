@@ -28,11 +28,7 @@ if(isset($_POST["submit"])){
             header("location: index.php?error=uidtaken");
             exit();
         }
-        print_r($email);
-        createUser($conn, $name, $surname, $tel,$address, $email,$username, $pwd,  $storename );
-
-    
-    
+        createUser($conn, $name, $surname, $tel,$address, $email,$username, $pwd, $storename);
 }else{
     header("location: index.php");
     exit(); 

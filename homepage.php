@@ -33,8 +33,12 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
     if (mysqli_num_rows($resultData) > 0) {
        
         while ($row = $resultData->fetch_assoc()) {
-
+            if($row["P_name"]=="empty"){
+                $result = 0;
+                continue;
+            }else{
             // echoing a product item to display
+            $result = 1;
             echo "
         <div class='product-item'> 
             <div class='image-box'>  
@@ -60,11 +64,13 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                      </div>            
              </div> ";
         }
-    } else {
-        $result = 0;
-        echo "0 results";
+    }
     }
     $data[] = "";
+
+    if($result==0){
+        echo "0 results";
+        }
     ?>
 
     </div>

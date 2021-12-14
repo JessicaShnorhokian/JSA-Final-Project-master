@@ -1,19 +1,20 @@
 <?php
-if(isset($_POST["searchbutton"])){
-    $productName = $_POST["search"];
 
-
+include_once 'header.php';
 require_once 'db.php';
-require_once 'api.php';
+include_once 'api.php';
+session_start();
+$search = $_POST["search"];
+$U_id = $_SESSION['U_id'];
 
-$productresult=searchInventory($conn, $productName)
-if(!empty($productresult)){
+?>
 
-header("location: ./result.php");
-}
+<link rel="stylesheet" href="./css/homepage.css">
+<div class="inventory-result">
+<main class='main-container'>
+    <?php 
+        searchInventory($conn, $search, $U_id);
+    ?>
 
-
-}else {
-    header("location: ./login.php");
-            exit();
-}
+</main>
+</div>
