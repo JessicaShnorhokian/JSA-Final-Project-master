@@ -13,7 +13,6 @@ $U_id = $_SESSION['U_id'];
 <div class="inventory-result">
     
     <main class='main-container'>
-        
         <?php 
         searchInventory($conn, $search, $U_id);
     ?>
