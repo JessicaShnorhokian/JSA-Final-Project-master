@@ -33,7 +33,11 @@ $result=0;
 
     if (mysqli_num_rows($resultData) > 0) {
         while ($row = $resultData->fetch_assoc()) {
-
+            if($row["O_id"]==-1){
+                $result = 0;
+                continue;
+            }else {
+                $result = 1;
             // echoing a product item to display
             echo "
         <div class='product-item'> 
@@ -56,21 +60,16 @@ $result=0;
                             </div>
                      </div>            
              </div> ";
+            }
         }
     } 
-    else {
-        $result = 0;
+    if($result==0){
         echo "0 results";
-    }
-    $data[] = "";
+        }
     ?>
      </div>
 </main>
-<!-- 
-<div class='edit-im'>
-                        <img src='./resources/images/edit.png' class='edit-button' onclick='displayUpdateForm({$row['O_id']})' alt=''>
-                            </div> -->
-<!-- Add button DOM element-->
+
 
 <a href="#" class="float">
     <span class="glyphicon glyphicon-plus my-float"></span>
