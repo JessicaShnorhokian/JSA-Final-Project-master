@@ -111,12 +111,14 @@ $counter = 0;
                     <div class="form-group">
                         <input type="number" min="0" class="form-control" name="P_quantity" style="width:100%" placeholder="Enter product quantity!" required>
                     </div>
-
+                            
                   <div style="float: right;">
+
                        <button form="addProduct" onclick="">
                             add product
                         </button>
 
+                    
 
                     </form>
 
