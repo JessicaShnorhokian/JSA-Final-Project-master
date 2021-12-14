@@ -17,6 +17,8 @@ $counter = 0;
     <?php
 $result=0;
      require_once 'db.php';
+     require_once 'api.php';
+
      echo ("<script>console.log('PHP: " . $username . "');</script>");
  
      $sql = "SELECT  * FROM `orderclass` where U_id= ?";
@@ -92,7 +94,6 @@ $result=0;
                     <div class="form-group">
                     
                     <form action="" form="addProduct">
-                
                     <?php
                     $pdo = new PDO('mysql:host=sql6.freesqldatabase.com; dbname=sql6458239', 'sql6458239', 'Tl1Xl4vVI5');
                     $sql = "SELECT P_id, p_name FROM inventory where U_id = $U_id";
@@ -100,11 +101,12 @@ $result=0;
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute();
                     $users = $stmt->fetchAll();
+                    
                     ?>
                     <select name="P_id" class="form-control">
                         <option value="" disabled="disabled" selected>please select a product</option>
-                        <?php foreach($users as $user): ?>
-                          <?  if($user['p_name']=="empty")
+                        <?php foreach($users as $user):   
+                        if($user["p_name"]=="empty")
                             {
                                 continue;
                             } ?>
@@ -147,7 +149,11 @@ $result=0;
                     class="form-control" >
                     <option value="" disabled="disabled" selected>please select a customer</option>
 
-                        <?php foreach($users as $user): ?>
+                        <?php foreach($users as $user): 
+                            if($user["C_name"]==-1){
+                                continue;
+                            }
+                            ?>
                     <option value="<?= $user['C_id']; ?>"><?= $user['C_name']; ?></option>
                     <?php endforeach; ?>
                     </select>
