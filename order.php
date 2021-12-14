@@ -104,6 +104,18 @@ $counter = 0;
                             <?php endforeach; ?>
                         </select>
                     </div>
+<<<<<<< HEAD
+
+                    
+                   <?php 
+                  
+                  include 'api.php';
+       
+                   //$quant= getQuantity($conn,$U_id,$user['P_id']);
+                   // debug_to_console($quant);
+                    ?> 
+=======
+>>>>>>> df921d98e219a2d7c2ef820297a9dec59bc880af
                     <div class="form-group">
                         <input type="number" min="0" class="form-control" name="P_quantity" style="width:100%" placeholder="Enter product quantity!" required>
                     </div>
