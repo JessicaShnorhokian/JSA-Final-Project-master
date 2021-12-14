@@ -16,7 +16,8 @@ $U_id = $_SESSION['U_id'];
     
 
     $quant= getQuantity($conn,$U_id,$P_id);    
-
+    $selling_price = getSellingPrice($conn,$U_id,$P_id);
+    $totalPrice= $quant*$selling_price;
 
     if($quant<$P_quantity)
     {
@@ -28,7 +29,10 @@ $U_id = $_SESSION['U_id'];
     }else{
         
         $newQuantity = $quant-$P_quantity;
-            updateQuantity($conn,$P_id,$U_id,$newQuantity);
+        updateQuantity($conn,$P_id,$U_id,$newQuantity);
+        addSoldItem($conn,$P_id,$quant,$U_id);
+        header("location: order.php?ordercanceled");
+
             
           //createOrder($conn, $P_id, $P_quantity,1, $U_id);
 

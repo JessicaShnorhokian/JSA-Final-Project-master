@@ -106,11 +106,25 @@ function getQuantity($conn, $userid, $productID)
     }
     print_r($row);
 
-
     
+}
+function getSellingPrice($conn, $userid, $productID)
+{
+
+    $sql="SELECT * FROM inventory where U_id = $userid and P_id = $productID";
+    $result = mysqli_query($conn, $sql);
+    
+    print_r($result);
+   
+    while ($row = mysqli_fetch_assoc($result))
+    { 
+       return $row['p_sellingprice'];
+    }
+    print_r($row);
 
     
 }
+
 
 
 
@@ -138,7 +152,7 @@ function createProduct($conn, $name, $quantity, $costperitem, $sellingprice, $fi
 function createOrder($conn, $P_id, $P_quantity, $P_sellingprice, $userid)
 {
 
-    $sql = "INSERT INTO orderclass(P_id, P_quantity, P_sellingprice, U_id) VALUES (?, ?, ?, ?);";
+    $sql = "INSERT INTO customer_order(P_id, P_quantity, P_sellingprice, U_id) VALUES (?, ?, ?, ?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ./order.php?error=stmtfailed2");
@@ -148,6 +162,27 @@ function createOrder($conn, $P_id, $P_quantity, $P_sellingprice, $userid)
     
 
     mysqli_stmt_bind_param($stmt, "iids", $P_id, $P_quantity, $P_sellingprice, $userid);
+    if (!mysqli_stmt_execute($stmt)) {
+        print_r(mysqli_stmt_error($stmt));
+    } else {
+
+        mysqli_stmt_close($stmt);
+        header("location: ./order.php?error=none");
+    }
+}
+function addSoldItem($conn, $P_id, $P_quantity, $userid)
+{
+
+    $sql = "INSERT INTO sold_items(P_id, P_quantity, U_id) VALUES (?, ?,  ?);";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ./order.php?error=stmtfailed2");
+
+        exit();
+    }
+    
+
+    mysqli_stmt_bind_param($stmt, "iis", $P_id, $P_quantity, $userid);
     if (!mysqli_stmt_execute($stmt)) {
         print_r(mysqli_stmt_error($stmt));
     } else {
@@ -520,7 +555,6 @@ function updateQuantity($conn, $p_id, $u_id, $quantity)
     mysqli_stmt_bind_param($stmt, 'iii', $quantity, $u_id,$p_id);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
-    header("location: ./homepage.php?error=none");
     exit();
 
 }
