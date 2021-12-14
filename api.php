@@ -111,11 +111,10 @@ function getQuantity($conn, $userid)
 function createProduct($conn, $name, $quantity, $costperitem, $sellingprice, $filename,$userid)
 {
 
-    $sql = "INSERT INTO inventory(P_name, P_quantity, P_costperitem, P_sellingprice,P_filename,U_id) VALUES (?, ?, ?, ?, ?,?);";
+    $sql = "INSERT INTO inventory(P_name, P_quantity, P_costperitem, P_sellingprice, P_filename,U_id) VALUES (?, ?, ?, ?, ?,?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../index.php?error=stmtfailed2");
-
         exit();
     }
     
@@ -326,25 +325,79 @@ function oidExists($conn, $oid, $uid)
 
 function createUser($conn, $name, $surname, $number, $address, $email, $username, $password, $storename)
 {
-
-
+    //creating user
     $sql = "INSERT INTO user(U_name, U_surname, U_number, U_address, U_email,U_username, U_password, U_storename) VALUES (?, ?, ?, ?, ?,? ,? ,? );";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../index.php?error=stmtfailed2");
+        header("location: ./index.php?error=stmtfailed2");
         exit();
     }
-    print_r($stmt);
     $hashedpwd = password_hash($password, PASSWORD_DEFAULT);
     mysqli_stmt_bind_param($stmt, "ssssssss", $name, $surname, $number, $address, $email, $username, $hashedpwd, $storename);
     if (!mysqli_stmt_execute($stmt)) {
         print_r(mysqli_stmt_error($stmt));
     } else {
-
         mysqli_stmt_close($stmt);
-        header("location: ./login.php");
+        $useridresult = mysqli_query($conn, "SELECT U_id FROM user ORDER BY U_id DESC LIMIT 1");
+        $obj = mysqli_fetch_object($useridresult);
+        $U_id = $obj->U_id;
+        $U_id = $U_id+1;
+        $emptyvar = "@emptyvar";
+        $emptynum = -1;
+    //inserting into inventory
+    $inventorysql = "INSERT INTO inventory(P_name, p_quantity, p_costperitem, p_sellingprice,p_filename,U_id) VALUES (?, ?, ?, ?, ?,?);";
+    $inventorystmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($inventorystmt, $inventorysql)){
+        header("location: ./index.php?error=stmtfailed3");
+        exit();
+    }
+    mysqli_stmt_bind_param($inventorystmt, "sssssi", $emptyvar, $emptyvar, $emptyvar,$emptyvar, $emptyvar,$U_id);
+    if (!mysqli_stmt_execute($inventorystmt)) {
+        print_r(mysqli_stmt_error($inventorystmt));
+    } else {
+        mysqli_stmt_close($inventorystmt);
+    
+         //inserting into sold items
+    $SoldItemsSql = "INSERT INTO sold_items(P_id, P_quantity, U_id) VALUES (-1, -1,{$U_id});";
+    if (!mysqli_query($conn, $SoldItemsSql)) {
+        header("location: ./index.php?error=stmtfailed5");
+      exit();
+    } else {
+        echo "<script>console.log(New record created successfully)</script>";
+        //inserting into order class
+        $OrderClassSql = "INSERT INTO orderclass(P_id, P_quantity, P_sellingprice, U_id) VALUES (-1, -1, -1,{$U_id});";
+    if (!mysqli_query($conn, $OrderClassSql)) {
+        header("location: ./index.php?error=stmtfailed6");
+      exit();
+    } else {
+        echo "<script>console.log(New record created successfully)</script>";
+  
+        //inserting into customer order
+    $CustomerOrderSql = "INSERT INTO customer_order(O_id, C_id, O_totalprice, O_dateoforder, U_id) VALUES (-1, -1, -1, -1 , {$U_id});";
+    if (!mysqli_query($conn, $CustomerOrderSql)) {
+        header("location: ./index.php?error=stmtfailed7");
+      exit();
+    } else {
+        echo "<script>console.log(New record created successfully)</script>";
+  
+        //inserting into customer
+    $CustomerSql = "INSERT INTO customer(C_name, C_surname, C_email, C_number, C_address, U_id) VALUES (-1, -1, -1, -1, -1, {$U_id});";
+    if (!mysqli_query($conn, $CustomerSql)) {
+        header("location: ./index.php?error=stmtfailed8");
+      exit();
+    } else {
+        echo "<script>console.log(New record created successfully)</script>";
+    }
     }
 }
+
+}
+}
+mysqli_close($conn);
+header("location: ./login.php");
+}
+}
+
 
 function debug_to_console($data)
 {
@@ -371,28 +424,7 @@ function getuserid($conn, $username)
     $result = $stmt->get_result();
     $userid = $result->fetch_assoc();
 }
-function searchInventory($conn, $productName)
-{
-    $sql = "SELECT * FROM inventory WHERE P_name = ? ;";
-    $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ./index.php?error=stmtfailed");
-        exit();
-    }
-    mysqli_stmt_bind_param($stmt, "s", $productName);
-    mysqli_stmt_execute($stmt);
 
-    $resultData = mysqli_stmt_get_result($stmt);
-
-    if ($row = mysqli_fetch_assoc($resultData)) {
-        return $row;
-    } else {
-        $result = false;
-        return $result;
-    }
-
-    mysqli_stmt_close($stmt);
-}
 
 
 function loginUsr($conn, $username, $pass)
@@ -424,8 +456,6 @@ function loginUsr($conn, $username, $pass)
         $userid = $username;
         $_SESSION['userid'] = $userid;
         header("location: ./homepage.php");
-
-
         exit();
     }
 }
@@ -501,5 +531,42 @@ function updateCustomer($conn, $cid, $u_id, $name, $surname, $email, $number, $a
     mysqli_stmt_close($stmt);
     header("location: ./customer.php?error=none");
     exit();
+
+}
+
+function searchInventory($conn, $searchInput, $U_id){
+    $search = mysqli_real_escape_string($conn, $searchInput);
+    $sql = "SELECT * FROM inventory WHERE U_id = $U_id AND (P_name LIKE '%$search%' OR p_quantity LIKE '%$search%' OR p_costperitem LIKE '%$search%' OR p_sellingprice LIKE '%$search%' OR p_filename LIKE '%$search%');";
+    $result = mysqli_query($conn, $sql);
+    $queryResult = mysqli_num_rows($result);
+
+    if($queryResult > 0){
+        while($row = mysqli_fetch_assoc($result)){
+            echo "
+                <div class='product-item'> 
+                    <div class='image-box'>  
+                         <img src='./resources/images/{$row['p_filename']}' alt='' class='product-image'>
+                                 <div class='edit'>
+                                      <div class='edit-im'>
+                                <img src='./resources/images/edit.png' class='edit-button' onclick='displayUpdateForm({$row['P_id']})' alt=''>
+                            </div>
+                            <div class='edit-delete'>
+                                <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='showDeleteForm({$row['P_id']})'>
+                            </div>        
+                            </div>
+                                <div class='product-desc'  >
+                                
+                                <h1 class='p-name' > {$row['P_name']}  </h1>
+                                <h3 class='desc'>Quantity: {$row['p_quantity']}</h3>
+                                <h3 class='desc'>Price:{$row['p_sellingprice']}</h3>
+
+
+                            </div>
+                     </div>            
+             </div> ";
+        }
+    } else {
+        echo "No Results";
+    }
 
 }
