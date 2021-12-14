@@ -91,6 +91,9 @@ $counter = 0;
             <div class="modal-body">
                 <form action="./oadd.php" method="post" enctype="multipart/form-data" id = "addOrderForm">
                     <div class="form-group">
+                    
+                    <form action="" form="addProduct">
+
                     <?php
                     $pdo = new PDO('mysql:host=sql6.freesqldatabase.com; dbname=sql6458239', 'sql6458239', 'Tl1Xl4vVI5');
                     $sql = "SELECT P_id, p_name FROM inventory";
@@ -110,12 +113,13 @@ $counter = 0;
                     </div>
 
                   <div style="float: right;">
-                  <form action="addProduct()" id = "addProduct">
                        <button form="addProduct" onclick="">
-                                    add product
-                                </button>
-                  </form>
-                        
+                            add product
+                        </button>
+
+
+                    </form>
+
                                
                     </div>
 
