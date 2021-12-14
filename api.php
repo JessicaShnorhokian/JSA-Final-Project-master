@@ -570,3 +570,47 @@ function searchInventory($conn, $searchInput, $U_id){
     }
 
 }
+
+function searchCustomer($conn, $searchInput, $U_id){
+    $search = mysqli_real_escape_string($conn, $searchInput);
+    $sql = "SELECT * FROM customer WHERE U_id = $U_id AND (C_name LIKE '%$search%' OR C_surname LIKE '%$search%' OR C_email LIKE '%$search%' OR C_number LIKE '%$search%' OR C_address LIKE '%$search%');";
+    $result = mysqli_query($conn, $sql);
+    $queryResult = mysqli_num_rows($result);
+
+    if($queryResult > 0){
+        while($row = mysqli_fetch_assoc($result)){
+            echo "
+            <div class='product-item'> 
+                <div class='image-box'>  
+                   
+                        <div class='edit'>
+                                    <div class='edit-im'>
+                                        <img src='./resources/images/edit.png' class='edit-button' onclick='displayUpdateForm({$row['C_id']})' alt=''>
+                                    </div>
+                                    <div class='edit-delete'>
+                                        <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='showDeleteForm({$row['C_id']})'>
+                                    </div>        
+                        </div>
+                                    <div class='product-desc'  >
+                                    <div class='product-title'>
+                                    <div class='p-name fname'>
+                                       {$row['C_name']} 
+                                    </div>
+                                    <div class='p-name sname'>
+                                       {$row['C_surname']} 
+                                    </div>
+                                    </div>
+                                    <h3 class='desc'> Number: {$row['C_number']}</h3>
+                                    <h3 class='desc'> Address: {$row['C_address']}</h3>
+                                    <h3 class='desc'> Email: {$row['C_email']}</h3>
+    
+    
+                                    </div>
+                         </div>            
+                 </div> ";
+        }
+    } else {
+        echo "No Results";
+    }
+
+}
