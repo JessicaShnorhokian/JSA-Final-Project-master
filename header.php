@@ -43,7 +43,7 @@
                     <a href="customer.php" >Customer</a>
                     <a href="order.php" >Orders</a>
                     <a href="reports.php">Reports</a>
-                    <a href="# ">Account</a>
+                    <a href="index.php">Logout</a>
         </div>
       </div>
     </nav>
