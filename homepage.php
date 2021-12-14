@@ -95,13 +95,13 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                         <input type="text" class="form-control" name="name" style="width:100%" placeholder="Enter product name!" required>
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control" name="quantity" style="width:100%" placeholder="Enter product Quantity!" required>
+                        <input type="number" min="0" class="form-control" name="quantity" style="width:100%" placeholder="Enter product Quantity!" required>
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control" name="costperitem" style="width:100%" placeholder="Enter cost per item!" required>
+                        <input type="number" min= "0" class="form-control" name="costperitem" style="width:100%" placeholder="Enter cost per item!" required>
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control" name="sellingprice" style="width:100%" placeholder="Enter selling price!" required>
+                        <input type="number"  min= "0"  class="form-control" name="sellingprice" style="width:100%" placeholder="Enter selling price!" required>
                     </div>
                     <div class="form-group">
                         <input type="file" name="uploadfile" value="" />
@@ -148,13 +148,13 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                         <input type="text" class="form-control" name="name" style="width:100%" placeholder="Enter new product name!" >
                     </div>
                     <div class="form-group">
-                        <input type="required" class="form-control" name="quantity" style="width:100%" placeholder="Enter new product Quantity!" >
+                        <input type="required"  min= "0"  class="form-control" name="quantity" style="width:100%" placeholder="Enter new product Quantity!" >
                     </div>
                     <div class="form-group">
-                        <input type="required" class="form-control" name="cost" style="width:100%" placeholder="Enter new cost per item!" >
+                        <input type="required"  min= "0"  class="form-control" name="cost" style="width:100%" placeholder="Enter new cost per item!" >
                     </div>
                     <div class="form-group">
-                        <input type="required" class="form-control" name="price" style="width:100%" placeholder="Enter new selling price!">
+                        <input type="required"  min= "0"  class="form-control" name="price" style="width:100%" placeholder="Enter new selling price!">
                     </div>
                     <div class="form-group">
                         <input type="file" name="uploadfile" value="" />
