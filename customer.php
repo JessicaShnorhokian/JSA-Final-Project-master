@@ -38,26 +38,29 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
         <div class='product-item'> 
             <div class='image-box'>  
                
-                     <div class='edit'>
-                            <div class='edit-im'>
-    
-                            <a></a>
-                                <img src='./resources/images/edit.png' class='edit-button' onclick='displayUpdateForm({$row['C_id']})' alt=''>
-                            </div>
-                            <div class='edit-delete'>
-                                <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='showDeleteForm({$row['C_id']})'>
-                            </div>        
-                     </div>
+                    <div class='edit'>
+                                <div class='edit-im'>
+                                    <img src='./resources/images/edit.png' class='edit-button' onclick='displayUpdateForm({$row['C_id']})' alt=''>
+                                </div>
+                                <div class='edit-delete'>
+                                    <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='showDeleteForm({$row['C_id']})'>
+                                </div>        
+                    </div>
                                 <div class='product-desc'  >
-                                
-                                <h1 class='p-name' id='fname' > {$row['C_name']}  </h1>
-                                <h1 class='p-name' id='sname' > {$row['C_surname']}  </h1>
+                                <div class='product-title'>
+                                <div class='p-name fname'>
+                                   {$row['C_name']} 
+                                </div>
+                                <div class='p-name sname'>
+                                   {$row['C_surname']} 
+                                </div>
+                                </div>
                                 <h3 class='desc'> Number: {$row['C_number']}</h3>
                                 <h3 class='desc'> Address: {$row['C_address']}</h3>
                                 <h3 class='desc'> Email: {$row['C_email']}</h3>
 
 
-                            </div>
+                                </div>
                      </div>            
              </div> ";
         }

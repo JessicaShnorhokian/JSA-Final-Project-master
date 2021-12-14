@@ -216,41 +216,7 @@ function deleteOrder($conn, $oid, $u_id)
     header("location: ./order.php?error=none");
 }
 
-function searchAllDB($search, $u_id){
-    global $mysqli;
-    
-    $out = Array();
-    
-    $sql = "show tables";
-    $rs = $mysqli->query($sql);
-    if($rs->num_rows > 0){
-        while($r = $rs->fetch_array()){
-            $table = $r[0];
-            $sql_search = "select * from `".$table."` where ";
-            $sql_search_fields = Array();
-            $sql2 = "SHOW COLUMNS FROM `".$table."`";
-            $rs2 = $mysqli->query($sql2);
-            if($rs2->num_rows > 0){
-                while($r2 = $rs2->fetch_array()){
-                    $column = $r2[0];
-                    $sql_search_fields[] = "`".$column."` like('%".$mysqli->real_escape_string($search)."%')";
-                }
-                $rs2->close();
-            }
-            $sql_search .= implode(" OR ", $sql_search_fields);
-            $rs3 = $mysqli->query($sql_search);
-            $out[$table] = $rs3->num_rows."\n";
-            if($rs3->num_rows > 0){
-                $rs3->close();
-            }
-        }
-        $rs->close();
-    }
-    
-    return $out;
-}
 
-print_r(searchAllDB("search string"));
 
 function uidExists($conn, $username)
 {

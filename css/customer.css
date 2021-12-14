@@ -74,20 +74,22 @@
 .p-name {
     font-family: inherit;
     font-style: normal;
-    max-width: 2rem;
     font-weight: 700;
+    width: fit-content;
     color: var(--token-05828702-56c4-4b7f-843e-eab3a79a0bd7, rgb(0, 0, 0));
     letter-spacing: -0.3px;
     font-size: 150%;
-    margin-bottom: 10%;
+
 }
 
-
-#sname{
-    position: absolute;
-    top: 0;
-    right: 66%;
+.fname{
+    margin-right: 0.4rem;
 }
+.product-title{
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
 .desc {
     color: #7c7a7a;
     font-size: 80%;
