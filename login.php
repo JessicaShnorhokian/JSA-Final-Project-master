@@ -27,6 +27,9 @@
                     <input type="password" id="password" class="fillables" name = "password" placeholder="Password">
 
                     <button type="submit" name = "submit" id="signup">Login</button>
+                    <br>
+                     <p>Don't Have An Account? <a href="index.php">Signup up Here</a></p> 
+
 
                 </div>
             </form>

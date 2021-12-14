@@ -37,8 +37,11 @@
 
                     <input type="text" id="storename" name="storename" class="fillables" placeholder="store name">
 
-                    <button type="submit" name="submit" id="signup">Sign Up</button>
-                    <button type="submit" name="" onclick="window.open('login.php')">Login</button>
+
+                    <button type="submit" name="submit" id="signup">Sign Up</button>   
+                    <br>
+                     <p>Already Have An Account? <a href="login.php">Login Here</a></p> 
+
                 </div>
             </form>
  
