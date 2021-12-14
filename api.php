@@ -545,14 +545,14 @@ function searchInventory($conn, $searchInput, $U_id){
     $sql = "SELECT * FROM inventory WHERE U_id = $U_id AND (P_name LIKE '%$search%' OR p_quantity LIKE '%$search%' OR p_costperitem LIKE '%$search%' OR p_sellingprice LIKE '%$search%' OR p_filename LIKE '%$search%');";
     $result = mysqli_query($conn, $sql);
     $queryResult = mysqli_num_rows($result);
-
+    $searchresult=1;
     if($queryResult > 0){
         while($row = mysqli_fetch_assoc($result)){
             if($row["P_name"]=="empty"){
-                $result = 0;
+                $searchresult = 0;
                 continue;
             }else{
-                $result = 1;
+                $searchresult = 1;
             echo "
                 <div class='product-item'> 
                     <div class='image-box'>  
@@ -581,7 +581,7 @@ function searchInventory($conn, $searchInput, $U_id){
     else {
         echo "No Results";
     }
-    if($result == 1){
+    if($searchresult == 0){
         echo "No Results";
     }
 
@@ -592,9 +592,14 @@ function searchCustomer($conn, $searchInput, $U_id){
     $sql = "SELECT * FROM customer WHERE U_id = $U_id AND (C_name LIKE '%$search%' OR C_surname LIKE '%$search%' OR C_email LIKE '%$search%' OR C_number LIKE '%$search%' OR C_address LIKE '%$search%');";
     $result = mysqli_query($conn, $sql);
     $queryResult = mysqli_num_rows($result);
-
+    $searchresult=1;
     if($queryResult > 0){
         while($row = mysqli_fetch_assoc($result)){
+            if($row["C_name"]==-1){
+                $result = 0;
+                continue;
+            }else{
+                $result = 1;
             echo "<div class='product-item'> 
                 <div class='image-box'>  
                    
@@ -623,6 +628,7 @@ function searchCustomer($conn, $searchInput, $U_id){
                                     </div>
                          </div>            
                  </div> ";
+            }
         }
     } else {
         echo "No Results";
