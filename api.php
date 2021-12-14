@@ -501,6 +501,29 @@ function updateProduct($conn, $p_id,$u_id, $name, $quantity, $costperitem ,$sell
     exit();
 
 }
+function updateQuantity($conn, $p_id, $u_id, $quantity)
+{
+    $row=pidExists($conn, $p_id,$u_id);
+
+   
+    if(empty($quantity)){
+        $quantity=$row['p_quantity'];
+    }
+   
+    $sql="UPDATE inventory SET p_quantity=? where U_id=? and P_id=?";
+    $stmt=mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql))
+    {
+        header("location: ./homepage.php?error=smtngfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, 'iii', $quantity, $u_id,$p_id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ./homepage.php?error=none");
+    exit();
+
+}
 function updateCustomer($conn, $cid, $u_id, $name, $surname, $email, $number, $address)
 {
     $row=cidExists($conn, $cid, $u_id);
