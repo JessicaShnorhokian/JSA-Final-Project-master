@@ -4,27 +4,47 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/index1.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register/Login</title>
 </head>
 
 <body>
     <main class="main-container">
-    <br><br><br><br><br>
         <div class="welcome">
             <h1>Welcome!</h1>
+            <h2>Please Register to continue for free</h2>
         </div>
-         <br> <br> <br> <br><br><br>
         <div class="form-container" id="formcon">
-        <form action="./index1.php" >
-        <button type="submit" name="submit" id="signup">Sign Up</button>
-        </form>
-        <br>
-        <br>
-        <form action="./login.php">
-        <button type="submit" name="submit" id="login">Log In</button>
-        </form>
+        <form action="./signup.php" class="signup" method ="post">
+                
+            <div class="signup-div">
+                    <input type="text" class="name" id="name" name="name" placeholder="Name" required>
+
+                    <input type="text" class="name" id="surname" name="surname" placeholder="Surname" required>
+
+                    <input type="text" id="user" name="username" class="fillables" placeholder="Username" required>
+
+                    <input type="text" class="fillables" id="address" name="address" placeholder="Address Line" required>
+
+                    <input type="number" id="telnumber"  name="number" class="fillables"  placeholder="Phone Number" required>
+
+                    <input type="email" id="username" class="fillables" name="email" placeholder="Email" required>
+
+                    <input type="password" id="password" name="password" class="fillables" placeholder="Password" required>
+
+                    <input type="password" id="passwordconfirm" name="passwordconfirm" class="fillables" placeholder="Confirm Password" required>
+
+                    <input type="text" id="storename" name="storename" class="fillables" placeholder="store name" required>
+
+
+                    <button type="submit" name="submit" id="signup">Sign Up</button>   
+                    <br>
+                     <p>Already Have An Account? <a href="login.php">Login Here</a></p> 
+
+                </div>
+            </form>
+ 
         </div>
     </main>
     <main class="side-container">
@@ -146,5 +166,8 @@
         </div>
     </main>
 
+ 
+
 </body>
+
 </html>
