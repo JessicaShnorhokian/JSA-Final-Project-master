@@ -17,7 +17,6 @@ $U_id = $_SESSION['U_id'];
         <?php 
         searchInventory($conn, $search, $U_id);
     ?>
-
 </main>
 </div>
 
@@ -26,6 +25,13 @@ $U_id = $_SESSION['U_id'];
         <?php 
         searchCustomer($conn, $search, $U_id);
     ?>
+</main>
+</div>
 
+<div class="order-result">
+    <main class='main-container'>
+        <?php 
+        searchOrder($conn, $search, $U_id);
+    ?>
 </main>
 </div>

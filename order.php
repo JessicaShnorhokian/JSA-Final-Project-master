@@ -15,7 +15,7 @@ $counter = 0;
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <?php
-$result=0;
+    $result=0;
      require_once 'db.php';
      echo ("<script>console.log('PHP: " . $username . "');</script>");
  
@@ -33,44 +33,41 @@ $result=0;
 
     if (mysqli_num_rows($resultData) > 0) {
         while ($row = $resultData->fetch_assoc()) {
-
+            if($row["P_id"]==-1){
+                $result = 0;
+                continue;
+            }else{
             // echoing a product item to display
+            $result = 1;
             echo "
         <div class='product-item'> 
             <div class='image-box'>  
-               
                      <div class='edit'>
-                
-                           
+                            <div class='edit-maximize'>
+                                <img src='./resources/images/maximize.png' class='max-button' alt='' onclick='showOrderDetails({$row['O_id']})'>
+                            </div>
                             <div class='edit-delete'>
                                 <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='showDeleteForm({$row['O_id']})'>
                             </div>        
-                     </div>
+                                </div>
                                 <div class='product-desc'  >
-                                
                                 <h1 class='p-name' > {$row['P_id']}  </h1>
                                 <h3 class='desc'>Order : {$row['P_quantity']}</h3>
-                                <h3 class='desc'>Order Address: {$row['P_sellingprice']}</h3>
-
-
                             </div>
                      </div>            
              </div> ";
+            }
         }
     } 
-    else {
-        $result = 0;
+    
+    if($result == 0){
         echo "0 results";
     }
     $data[] = "";
     ?>
      </div>
 </main>
-<!-- 
-<div class='edit-im'>
-                        <img src='./resources/images/edit.png' class='edit-button' onclick='displayUpdateForm({$row['O_id']})' alt=''>
-                            </div> -->
-<!-- Add button DOM element-->
+
 
 <a href="#" class="float">
     <span class="glyphicon glyphicon-plus my-float"></span>
@@ -91,23 +88,23 @@ $result=0;
             <div class="modal-body">
                 <form action="./oadd.php" method="post" enctype="multipart/form-data" id = "addOrderForm">
                     <div class="form-group">
-                    
-                    <form action="" form="addProduct">
-
+<!-- check for p_name does not equal to "empty" -->
                     <?php
                     $pdo = new PDO('mysql:host=sql6.freesqldatabase.com; dbname=sql6458239', 'sql6458239', 'Tl1Xl4vVI5');
-                    $sql = "SELECT P_id, p_name FROM inventory";
+                    $sql = "SELECT P_id, p_name FROM inventory Where U_id = ?";
                     $stmt = $pdo->prepare($sql);
+                    $stmt->bind_param("i", $U_id);
                     $stmt->execute();
                     $users = $stmt->fetchAll();
                     ?>
                     <select name="P_id" class="form-control">
-                        <option value="" disabled="disabled" selected>please select a product</option>
+                        <option value="test" disabled="disabled" selected>please select a product</option>
                         <?php foreach($users as $user): ?>
                             <option value="<?= $user['P_id']; ?>"><?= $user['p_name']; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
+<<<<<<< HEAD
 
                     
                    <?php 
@@ -117,8 +114,10 @@ $result=0;
                    //$quant= getQuantity($conn,$U_id,$user['P_id']);
                    // debug_to_console($quant);
                     ?> 
+=======
+>>>>>>> df921d98e219a2d7c2ef820297a9dec59bc880af
                     <div class="form-group">
-                        <input type="number" min="0" class="form-control" name="P_quantity" style="width:100%" max="{$quant}" placeholder="Enter product quantity!" required>
+                        <input type="number" min="0" class="form-control" name="P_quantity" style="width:100%" placeholder="Enter product quantity!" required>
                     </div>
                             
                   <div style="float: right;">
@@ -127,9 +126,7 @@ $result=0;
                             add product
                         </button>
 
-                    
-
-                    </form>
+      
 
                                
                     </div>
@@ -179,6 +176,47 @@ $result=0;
     });
 </script>
 
+<!-- Order details container -->
+<div style="position:fixed; top:50%; left:50%; transform: translate(-50%, -50%);   width: 50%;" id="newmodal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title" id='order-ID' style="color:#000000"></h4>
+            </div>
+
+            <!-- continue with Order Details pop up details -->
+            <div class="modal-body">
+                <form action="./cadd.php" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" style="width:100%" placeholder="Enter customer name!" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="surname" style="width:100%" placeholder="Enter customer surname!" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" style="width:100%" placeholder="Enter customer email!" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="number" style="width:100%" placeholder="Enter customer number!" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="address" style="width:100%" placeholder="Enter customer address!" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" name="submit" class="btn btn-default">Add</button>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" name="cancel" class="btn btn-default" formnovalidate>Cancel</button>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -215,9 +253,19 @@ $result=0;
             $("#delete-container").modal('show');
         });
     });
-</script>
-<!-- Update and Delete Form Showing functions -->
-<script>
+
+
+    $(function() {
+        $(".max-button").click(function() {
+            $("#order-details").modal('show');
+        });
+    });
+// <!-- Update and Delete Form Showing functions -->
+
+    function showOrderDetails(Oid){
+        document.getElementByID('order-ID').innerHTML = Oid;
+    }
+
     function showId() {
         console.log(document.getElementById('username').value);
     }
@@ -232,7 +280,14 @@ $result=0;
 
     }
     </script>
-    
+            <?php
+                        function addProduct()
+                        {
+                            
+        
+                         }
+                    
+                ?>    
 </body>
 
 </html>
