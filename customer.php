@@ -32,7 +32,11 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
 
     if (mysqli_num_rows($resultData) > 0) {
         while ($row = $resultData->fetch_assoc()) {
-
+            if($row["C_name"]==-1){
+                $result = 0;
+                continue;
+            }else{
+                $result = 1;
             // echoing a product item to display
             echo "
         <div class='product-item'> 
@@ -63,12 +67,12 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                                 </div>
                      </div>            
              </div> ";
+            }
         }
     } 
-    else {
-        $result = 0;
+    if($result == 0){
         echo "0 results";
-    }
+        }
     $data[] = "";
     ?>
      </div>

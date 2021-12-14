@@ -30,8 +30,8 @@
                 </div>
                 
                 <div class="search-container">
-                    <form action="./result.php" method="post">
-                        <input type="text" class="search-input" name="search" placeholder="Search">
+                    <form action="./search.php" method="post">
+                        <input type="text" class="search-input" name="search" placeholder="Search" required>
                         <button class="search-button" type="submit" name="searchbutton">
                             Search
                         </button>

@@ -190,14 +190,18 @@ drawMaterialChart();
 
 <table style="margin-left: 6%;" >
 <tr>
+  <div class="customer-number">
   <td>
     <p class="number"><?Php echo "{$nofCustomer}"?></p>
     customers
   </td>
+  </div>
+  <div class="order-number">
   <td>
   <p class="number"><?Php echo "{$nofOrder}"?></p>
     orders
   </td>
+  </div>
 </tr>
   <tr>
     <td>
