@@ -247,13 +247,14 @@ function uidExists($conn, $username)
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
-
+    if($resultData){
     if ($row = mysqli_fetch_assoc($resultData)) {
         return $row;
     } else {
         $result = false;
         return $result;
     }
+}
 
     mysqli_stmt_close($stmt);
 }
