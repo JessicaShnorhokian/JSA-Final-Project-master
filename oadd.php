@@ -12,10 +12,9 @@ $U_id = $_SESSION['U_id'];
 
     require_once 'db.php';
     require_once 'api.php';
-    
+
     $quant= getQuantity($conn,$U_id,$P_id);
-    
-    print_r($quant);
+     print_r($quant);
     exit();
     
 
