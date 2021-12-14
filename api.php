@@ -542,6 +542,11 @@ function searchInventory($conn, $searchInput, $U_id){
 
     if($queryResult > 0){
         while($row = mysqli_fetch_assoc($result)){
+            if($row["P_name"]=="empty"){
+                $result = 0;
+                continue;
+            }else{
+                $result = 1;
             echo "
                 <div class='product-item'> 
                     <div class='image-box'>  
@@ -564,8 +569,13 @@ function searchInventory($conn, $searchInput, $U_id){
                             </div>
                      </div>            
              </div> ";
+            }
         }
-    } else {
+    }
+    else {
+        echo "No Results";
+    }
+    if($result == 1){
         echo "No Results";
     }
 
@@ -579,8 +589,7 @@ function searchCustomer($conn, $searchInput, $U_id){
 
     if($queryResult > 0){
         while($row = mysqli_fetch_assoc($result)){
-            echo "
-            <div class='product-item'> 
+            echo "<div class='product-item'> 
                 <div class='image-box'>  
                    
                         <div class='edit'>
@@ -613,4 +622,41 @@ function searchCustomer($conn, $searchInput, $U_id){
         echo "No Results";
     }
 
+}
+
+
+function searchOrder($conn, $searchInput, $U_id){
+    $search = mysqli_real_escape_string($conn, $searchInput);
+    $sql = "SELECT * FROM customer_order WHERE U_id = $U_id AND (O_id LIKE '%$search%' OR C_id LIKE '%$search%' OR C_totalprice LIKE '%$search%' OR O_dateoforder LIKE '%$search%');";
+    $result = mysqli_query($conn, $sql);
+
+   debug_to_console($result);
+    if(!empty($result)){
+    $queryResult = mysqli_num_rows($result);
+
+    if($queryResult > 0){
+        while($row = mysqli_fetch_assoc($result)){
+            echo "<div class='product-item'> 
+                    <div class='image-box'>  
+                        <div class='edit'>
+                            <div class='edit-maximize'>
+                                <img src='./resources/images/maximize.png' class='max-button' alt='' onclick='showOrderDetails({$row['O_id']})'>
+                            </div>
+                            <div class='edit-delete'>
+                                <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='showDeleteForm({$row['O_id']})'>
+                            </div>        
+                                </div>
+                                    <div class='product-desc'  >
+                                        <h1 class='p-name' > {$row['P_id']}  </h1>
+                                        <h3 class='desc'>Order : {$row['P_quantity']}</h3>
+                            </div>
+                     </div>            
+             </div> ";
+        }
+    } else {
+        echo "No Results";
+    }
+    }else {
+        echo "No Results";
+    }
 }
