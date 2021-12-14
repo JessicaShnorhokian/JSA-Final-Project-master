@@ -10,6 +10,23 @@ echo ("<script>console.log('PHP: " . $U_id . "');</script>");
 include_once 'db.php';
 include_once 'api.php';
 
+$sql3= "SELECT * FROM `user` WHERE U_id = '$U_id';";
+$result3 = $conn->query($sql3);
+
+if ($result3->num_rows > 0) {
+
+    while($row = $result3->fetch_assoc()) 
+    {
+        $userid= $row["U_id"]; 
+        $password= $row["U_password"];
+        $username= $row["U_username"];
+       
+    }
+} 
+else {
+echo "0 results";
+}
+
 
 $gains = getGain($conn,$U_id);
 
@@ -41,8 +58,62 @@ $result1 = $db->query("SELECT sold_items.P_id,sold_items.P_quantity,inventory.P_
 ?>
 <html>
   <head>
-    
+    <style>
+      
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 100%;
+  padding: 10px;
+
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+    </style>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  
   <link rel="stylesheet" href="css/reports.css">
 <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -140,8 +211,6 @@ var data = google.visualization.arrayToDataTable([
       }
       ?>
 
-
-
 ]);
 
 var materialOptions = {
@@ -217,6 +286,8 @@ drawMaterialChart();
 
 <div id="chart_div" style="width: 100%; height: 400px;"></div>
 <br>
+
+
 
 
 </body>

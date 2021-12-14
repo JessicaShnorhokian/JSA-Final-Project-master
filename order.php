@@ -5,10 +5,11 @@ session_start();
 $username = $_SESSION['username'];
 $U_id = $_SESSION['U_id'];
 echo ("<script>console.log('PHP: " . $username . "');</script>");
+$counter = 0;
+
 ?>
 <link rel="stylesheet" href="./css/order.css">
 <link rel="stylesheet" href="./css/bootstrap.css">
-
 
 <main class='main-container'>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
@@ -85,8 +86,11 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                 </h4>
             </div>
             <div class="modal-body">
-                <form action="./oadd.php" method="post" enctype="multipart/form-data">
+                <form action="./oadd.php" method="post" enctype="multipart/form-data" id = "addOrderForm">
                     <div class="form-group">
+                    
+                    <form action="" form="addProduct">
+
                     <?php
                     $pdo = new PDO('mysql:host=sql6.freesqldatabase.com; dbname=sql6458239', 'sql6458239', 'Tl1Xl4vVI5');
                     $sql = "SELECT P_id, p_name FROM inventory";
@@ -94,8 +98,8 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                     $stmt->execute();
                     $users = $stmt->fetchAll();
                     ?>
-                    <select name="P_id" class="form-control" required>
-                        <option value="" disabled="disabled" selected>--please select an option--</option>
+                    <select name="P_id" class="form-control">
+                        <option value="" disabled="disabled" selected>please select a product</option>
                         <?php foreach($users as $user): ?>
                             <option value="<?= $user['P_id']; ?>"><?= $user['p_name']; ?></option>
                             <?php endforeach; ?>
@@ -104,12 +108,20 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                     <div class="form-group">
                         <input type="number" min="0" class="form-control" name="P_quantity" style="width:100%" placeholder="Enter product quantity!" required>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="P_sellingprice" style="width:100%" placeholder="Enter product selling price!" required>
+
+                  <div style="float: right;">
+                       <button form="addProduct" onclick="">
+                            add product
+                        </button>
+
+
+                    </form>
+
+                               
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="U_id" style="width:100%" placeholder="Enter user ID!" required>
-                    </div>
+
+                        
+                  <br><br>
                     <div class="form-group">
                    <?php
                     $pdo = new PDO('mysql:host=sql6.freesqldatabase.com; dbname=sql6458239', 'sql6458239', 'Tl1Xl4vVI5');
@@ -121,7 +133,7 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
 
                     <select name="customer" 
                     class="form-control" >
-                    <option value="" disabled="disabled" selected>--please select an option--</option>
+                    <option value="" disabled="disabled" selected>please select a customer</option>
 
                         <?php foreach($users as $user): ?>
                     <option value="<?= $user['C_id']; ?>"><?= $user['C_name']; ?></option>
@@ -130,11 +142,12 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                     </div>
                     
                     <div class="form-group">
-                        <button type="submit" name="submit" class="btn btn-default">Add</button>
+                        <button type="submit" name="submit" class="btn btn-default" form="addOrderForm">Add</button>
                     </div>
                     <div class="form-group">
                         <button type="cancel" name="cancel" class="btn btn-default" formnovalidate>Cancel</button>
                     </div>
+
 
 
                 </form>
@@ -255,8 +268,15 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
         document.getElementById('pid1').value = pid
 
     }
-</script>
-
+    </script>
+            <?php
+                        function addProduct()
+                        {
+                            
+        
+                         }
+                    
+                ?>    
 </body>
 
 </html>
