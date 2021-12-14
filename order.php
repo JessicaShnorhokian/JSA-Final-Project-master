@@ -105,7 +105,7 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="P_quantity" style="width:100%" placeholder="Enter product quantity!" required>
+                        <input type="number" min="0" class="form-control" name="P_quantity" style="width:100%" placeholder="Enter product quantity!" required>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="P_sellingprice" style="width:100%" placeholder="Enter product selling price!" required>
