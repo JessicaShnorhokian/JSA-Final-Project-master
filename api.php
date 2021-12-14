@@ -613,15 +613,16 @@ function searchCustomer($conn, $searchInput, $U_id){
     $search = mysqli_real_escape_string($conn, $searchInput);
     $sql = "SELECT * FROM customer WHERE U_id = $U_id AND (C_name LIKE '%$search%' OR C_surname LIKE '%$search%' OR C_email LIKE '%$search%' OR C_number LIKE '%$search%' OR C_address LIKE '%$search%');";
     $result = mysqli_query($conn, $sql);
+ 
     $queryResult = mysqli_num_rows($result);
     $searchresult=1;
     if($queryResult > 0){
         while($row = mysqli_fetch_assoc($result)){
             if($row["C_name"]==-1){
-                $result = 0;
+                $searchresult = 0;
                 continue;
             }else{
-                $result = 1;
+                $searchresult = 1;
             echo "<div class='product-item'> 
                 <div class='image-box'>  
                    
@@ -663,13 +664,18 @@ function searchOrder($conn, $searchInput, $U_id){
     $search = mysqli_real_escape_string($conn, $searchInput);
     $sql = "SELECT * FROM customer_order WHERE U_id = $U_id AND (O_id LIKE '%$search%' OR C_id LIKE '%$search%' OR C_totalprice LIKE '%$search%' OR O_dateoforder LIKE '%$search%');";
     $result = mysqli_query($conn, $sql);
+    $searchresult = 1;
 
    debug_to_console($result);
     if(!empty($result)){
     $queryResult = mysqli_num_rows($result);
-
     if($queryResult > 0){
         while($row = mysqli_fetch_assoc($result)){
+            if($row["O_id"]==-1){
+                $searchresult = 0;
+                continue;
+            }else{ 
+                $searchresult=1;
             echo "<div class='product-item'> 
                     <div class='image-box'>  
                         <div class='edit'>
@@ -686,11 +692,15 @@ function searchOrder($conn, $searchInput, $U_id){
                             </div>
                      </div>            
              </div> ";
+            }
         }
-    } else {
+    } 
+    else {
         echo "No Results";
     }
-    }else {
-        echo "No Results";
-    }
+    
+}
+if($searchresult == 1){
+    echo "No Results";
+}
 }
