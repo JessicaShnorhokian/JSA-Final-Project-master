@@ -19,23 +19,23 @@
         <form action="./signup.php" class="signup" method ="post">
                 
             <div class="signup-div">
-                    <input type="text" class="name" id="name" name="name" placeholder="Name">
+                    <input type="text" class="name" id="name" name="name" placeholder="Name" required>
 
-                    <input type="text" class="name" id="surname" name="surname" placeholder="Surname">
+                    <input type="text" class="name" id="surname" name="surname" placeholder="Surname" required>
 
-                    <input type="text" id="user" name="username" class="fillables" placeholder="Username">
+                    <input type="text" id="user" name="username" class="fillables" placeholder="Username" required>
 
-                    <input type="text" class="fillables" id="address" name="address" placeholder="Address Line">
+                    <input type="text" class="fillables" id="address" name="address" placeholder="Address Line" required>
 
-                    <input type="text" id="telnumber" name="number" class="fillables"  placeholder="Phone Number">
+                    <input type="text" id="telnumber"  name="number" class="fillables"  placeholder="Phone Number" required>
 
-                    <input type="text" id="username" class="fillables" name="email" placeholder="Email">
+                    <input type="email" id="username" class="fillables" name="email" placeholder="Email" required>
 
-                    <input type="password" id="password" name="password" class="fillables" placeholder="Password">
+                    <input type="password" id="password" name="password" class="fillables" placeholder="Password" required>
 
-                    <input type="password" id="passwordconfirm" name="passwordconfirm" class="fillables" placeholder="Confirm Password">
+                    <input type="password" id="passwordconfirm" name="passwordconfirm" class="fillables" placeholder="Confirm Password" required>
 
-                    <input type="text" id="storename" name="storename" class="fillables" placeholder="store name">
+                    <input type="text" id="storename" name="storename" class="fillables" placeholder="store name" required>
 
 
                     <button type="submit" name="submit" id="signup">Sign Up</button>   

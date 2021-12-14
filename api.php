@@ -108,7 +108,7 @@ function createProduct($conn, $name, $quantity, $costperitem, $sellingprice, $fi
     }
     
 
-    mysqli_stmt_bind_param($stmt, "sssssi", $name, $quantity, $costperitem, $sellingprice, $filename,$userid);
+    mysqli_stmt_bind_param($stmt, "siddsi", $name, $quantity, $costperitem, $sellingprice, $filename,$userid);
     if (!mysqli_stmt_execute($stmt)) {
         print_r(mysqli_stmt_error($stmt));
     } else {
@@ -249,7 +249,7 @@ function pidExists($conn, $p_id,$u_id)
         header("location: ./index.php?error=stmtfailed");
         exit();
     }
-    mysqli_stmt_bind_param($stmt, "ss", $p_id,$u_id);
+    mysqli_stmt_bind_param($stmt, "ii", $p_id,$u_id);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
@@ -447,7 +447,7 @@ function updateProduct($conn, $p_id,$u_id, $name, $quantity, $costperitem ,$sell
         header("location: ./homepage.php?error=smtngfailed");
         exit();
     }
-    mysqli_stmt_bind_param($stmt, 'ssiisii', $name, $quantity,$costperitem,$sellingprice,$filename,$u_id,$p_id);
+    mysqli_stmt_bind_param($stmt, 'siddsii', $name, $quantity,$costperitem,$sellingprice,$filename,$u_id,$p_id);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     header("location: ./homepage.php?error=none");
