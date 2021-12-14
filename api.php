@@ -102,9 +102,10 @@ function getQuantity($conn, $userid, $productID)
    
     while ($row = mysqli_fetch_assoc($result))
     { 
-       return $row;
+       return $row['p_quantity'];
     }
-   
+    print_r($row);
+
 
     
 
@@ -243,7 +244,7 @@ function uidExists($conn, $username)
         header("location: ./index.php?error=stmtfailed");
         exit();
     }
-    mysqli_stmt_bind_param($stmt, "s", $username);
+    mysqli_stmt_bind_param($stmt, "i", $username);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
@@ -348,7 +349,7 @@ function createUser($conn, $name, $surname, $number, $address, $email, $username
         $obj = mysqli_fetch_object($useridresult);
         $U_id = $obj->U_id;
         $U_id = $U_id+1;
-        $emptyvar = "@emptyvar";
+        $emptyvar = "empty";
         $emptynum = -1;
     //inserting into inventory
     $inventorysql = "INSERT INTO inventory(P_name, p_quantity, p_costperitem, p_sellingprice,p_filename,U_id) VALUES (?, ?, ?, ?, ?,?);";
