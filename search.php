@@ -67,10 +67,11 @@ $U_id = $_SESSION['U_id'];
     </div>  
 <div class="customer-result">
     <main class='main-container'>
-      
+      <script>document.getElementById</script>
         <?php 
         searchCustomer($conn, $search, $U_id);
     ?>
+    
 </main>
 </div>
 </div>
@@ -91,7 +92,7 @@ $U_id = $_SESSION['U_id'];
 
 
 <!-- Delete form  -->
-<!-- <div style="position:fixed; top:50%; left:50%; transform: translate(-50%, -50%);   width: 20%;" class="fade" role="dialog" id="delete-containerC">
+<div style="position:fixed; top:50%; left:50%; transform: translate(-50%, -50%);   width: 20%;" class="fade" role="dialog" id="delete-containerC">
     <div class="modal-dialog modal-md">
 
         <div class="modal-content">
@@ -102,7 +103,7 @@ $U_id = $_SESSION['U_id'];
                 </h4>
             </div>
             <div class="modal-body">
-                <form action="./cdelete.php" method="post" id="delete-form" >
+                <form action="./cdelete.php" method="get" id="delete-form" >
                     <input type="text" name="C_id" id="pid" form="delete-form" class = "username" value="">
                     <div class="form-group" id="delete-buttons">
                         <button type="submit" name="yes" id="delete-yes" class="btn btn-default">Yes</button>
@@ -113,7 +114,7 @@ $U_id = $_SESSION['U_id'];
             </div>
         </div>
     </div>
-</div> -->
+</div>
 
 
 

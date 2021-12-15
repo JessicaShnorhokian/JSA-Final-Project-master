@@ -612,14 +612,7 @@ function searchInventory($conn, $searchInput, $U_id){
                 <div class='product-item'> 
                     <div class='image-box'>  
                          <img src='./resources/images/{$row['p_filename']}' alt='' class='product-image'>
-                                 <div class='edit'>
-                                      <div class='edit-im'>
-                                <img src='./resources/images/edit.png' class='edit-button' onclick='document.getElementById('pid1').value = {$row['P_id']}' alt=''>
-                            </div>
-                            <div class='edit-delete'>
-                                <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='document.getElementById('pid').value = {$row['P_id']}})'>
-                            </div>        
-                            </div>
+                                
                                 <div class='product-desc'  >
                                 
                                 <h1 class='p-name' > {$row['P_name']}  </h1>
@@ -642,6 +635,15 @@ function searchInventory($conn, $searchInput, $U_id){
 
 }
 
+// <div class='edit'>
+// <div class='edit-im'>
+// <img src='./resources/images/edit.png' class='edit-button' onclick='document.getElementById('pid1').value = {$row['P_id']}' alt=''>
+// </div>
+// <div class='edit-delete'>
+// <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='document.getElementById('pid').value = {$row['P_id']}})'>
+// </div>        
+// </div>
+
 function searchCustomer($conn, $searchInput, $U_id){
     $search = mysqli_real_escape_string($conn, $searchInput);
     $sql = "SELECT * FROM customer WHERE U_id = $U_id AND (C_name LIKE '%$search%' OR C_surname LIKE '%$search%' OR C_email LIKE '%$search%' OR C_number LIKE '%$search%' OR C_address LIKE '%$search%');";
@@ -661,13 +663,8 @@ function searchCustomer($conn, $searchInput, $U_id){
                 <div class='image-box'>  
                    
                         <div class='edit'>
-                                    <div class='edit-im'>
-                                        <img src='./resources/images/edit.png' class='edit-button' id='customer-edit' onclick='displayUpdateFormC({$row["C_id"]})' alt=''>
-                                    </div>
-                                    <div class='edit-delete'>
-                                        <img src='./resources/images/delete.png' class='delete-button' id='customer-delete' alt='' onclick='document.getElementById('pid').value = {$row['C_id']}'>
-                                    </div>        
-                        </div>
+                                           
+                                      </div>
                                     <div class='product-desc'  >
                                     <div class='product-title'>
                                     <div class='p-name fname'>
@@ -686,32 +683,7 @@ function searchCustomer($conn, $searchInput, $U_id){
                          </div>            
                  </div> 
                  
-                 <div style='position:fixed; top:50%; left:50%; transform: translate(-50%, -50%);   width: 20%;' class='fade' role='dialog' id='delete-containerC'>
-    <div class='modal-dialog modal-md'>
-
-        <div class='modal-content'>
-            <div class='modal-header'>
-
-                <h4 class='modal-title' style='color:#000000'>
-                    Delete Confirmation
-                </h4>
-            </div>
-            <div class='modal-body'>
-                <form action='cdelete.php' method='post' id='delete-form' >
-                <div class='form-group' id='delete-buttons'>
-                <input type='number' name='C_id' id='pid' form='delete-form' class = 'username' value=''>
-                        <button type='submit' name='yes' id='delete-yes' class='btn btn-default'>Yes</button>
-                        <button type='cancel' name='no' id='delete-no' class='btn btn-default'>No</button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-                 
-                 
-                 
+               
                  
                  ";
             }
@@ -721,6 +693,13 @@ function searchCustomer($conn, $searchInput, $U_id){
     }
 
 }
+
+// <div class='edit-im'>
+//                                         <img src='./resources/images/edit.png' class='edit-button' id='customer-edit' onclick='displayUpdateFormC({$row["C_id"]})' alt=''>
+//                                     </div>
+//                                     <div class='edit-delete' onclick='document.getElementById('pid').value = '{$row["C_id"]}'>
+//                                         <img src='./resources/images/delete.png' class='delete-button' id='customer-delete' alt='' onclick='document.getElementById('pid').value = '{$row["C_id"]}''>
+//                                     </div> 
 
 
 function searchOrder($conn, $searchInput, $U_id){
@@ -741,14 +720,7 @@ function searchOrder($conn, $searchInput, $U_id){
                 $searchresult=1;
             echo "<div class='product-item'> 
                     <div class='image-box'>  
-                        <div class='edit'>
-                            <div class='edit-maximize'>
-                                <img src='./resources/images/maximize.png' class='max-button' alt='' onclick='showOrderDetails({$row['O_id']})'>
-                            </div>
-                            <div class='edit-delete'>
-                                <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='showDeleteForm({$row['O_id']})'>
-                            </div>        
-                                </div>
+                        
                                     <div class='product-desc'  >
                                         <h1 class='p-name' > {$row['P_id']}  </h1>
                                         <h3 class='desc'>Order : {$row['P_quantity']}</h3>
@@ -767,3 +739,13 @@ if($searchresult == 1){
     echo "No Results";
 }
 }
+
+
+// <div class='edit'>
+//                             <div class='edit-maximize'>
+//                                 <img src='./resources/images/maximize.png' class='max-button' alt='' onclick='showOrderDetails({$row['O_id']})'>
+//                             </div>
+//                             <div class='edit-delete'>
+//                                 <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='showDeleteForm({$row['O_id']})'>
+//                             </div>        
+//                                 </div>
