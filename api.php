@@ -23,9 +23,6 @@ function pwdMatch($pwd, $pwdRepeat)
     return false;
 }
 
-//getCost
-
-//getGains
 function  saleperitem($conn, $item,$userid)
 {
     $sql = " SELECT SUM(P_quantity) FROM sold_items WHERE P_id= $item and U_id= $userid ;";
@@ -63,7 +60,8 @@ function getCustomerNumber($conn, $userid)
 
     $result = mysqli_query($conn, $sql);
     while ($row = mysqli_fetch_assoc($result))
-    { 
+    {
+    
        return $row['total'];
     }
     
