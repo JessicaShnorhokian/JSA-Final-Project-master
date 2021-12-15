@@ -93,7 +93,6 @@ $result=0;
                 <form action="./oadd.php" method="post" enctype="multipart/form-data" id = "addOrderForm">
                     <div class="form-group">
                     
-                    <form action="" form="addProduct">
                     <?php
                     $pdo = new PDO('mysql:host=sql6.freesqldatabase.com; dbname=sql6458239', 'sql6458239', 'Tl1Xl4vVI5');
                     $sql = "SELECT P_id, p_name FROM inventory where U_id = $U_id";
@@ -121,21 +120,9 @@ $result=0;
                         <input type="number" min="0" class="form-control" name="P_quantity" style="width:100%" max="" placeholder="Enter product quantity!" required>
                     </div>
                             
-                  <div style="float: right;">
-
-                       <button form="addProduct" onclick="">
-                            add product
-                        </button>
-
+            
                     
 
-                    </form>
-
-                               
-                    </div>
-
-                        
-                  <br><br>
                     <div class="form-group">
                    <?php
                     $pdo = new PDO('mysql:host=sql6.freesqldatabase.com; dbname=sql6458239', 'sql6458239', 'Tl1Xl4vVI5');
@@ -157,6 +144,12 @@ $result=0;
                     <option value="<?= $user['C_id']; ?>"><?= $user['C_name']; ?></option>
                     <?php endforeach; ?>
                     </select>
+                    </div>
+                    <div>
+                    <div class="form-group">
+                        <input type="date" class="form-control" name="date" style="width:100%"  placeholder="Enter date" required>
+                    </div>
+                            
                     </div>
                     
                     <div class="form-group">
