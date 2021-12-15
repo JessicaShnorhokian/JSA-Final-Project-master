@@ -55,8 +55,14 @@ $result=0;
                      </div>
                                 <div class='product-desc'  >
                                 
+<<<<<<< HEAD
                                 <h1 class='p-name' > {$row['C_name']}  </h1>
                                 <h3 class='desc'>TotalPrice: {$row['O_totalprice']}</h3>
+=======
+                                <h1 class='p-name' > {$row['P_id']}  </h1>
+                                <h3 class='desc'>Order quantity : {$row['P_quantity']}</h3>
+                                <h3 class='desc'>Order selling price: {$row['P_sellingprice']}</h3>
+>>>>>>> d01fb9252b970e9eb369490459ae152fe3f4fafa
 
 
                             </div>
