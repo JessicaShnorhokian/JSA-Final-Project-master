@@ -32,7 +32,9 @@ $gains = getGain($conn,$U_id);
 
 $costs= getCost($conn,$U_id);
 $nofCustomer = getCustomerNumber($conn,$U_id);
+$nofCustomer = $nofCustomer -1;
 $nofOrder = getOrderNumber($conn,$U_id);
+$nofOrder = $nofOrder -1;
 
 $result = $gains - $costs;
 if ($result>0)
@@ -206,8 +208,12 @@ var data = google.visualization.arrayToDataTable([
   <?php
       if($result1->num_rows > 0){
           while($row = $result1->fetch_assoc()){
+            if($row['P_name']=="empty"){
+              continue;
+            }else{
             echo "['".$row['P_name']."', ".$row['total_price']."],";
           }
+        }
       }
       ?>
 
