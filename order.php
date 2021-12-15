@@ -21,8 +21,9 @@ $result=0;
 
      echo ("<script>console.log('PHP: " . $username . "');</script>");
  
-     $sql = "SELECT  * FROM `orderclass` where U_id= ?";
- 
+     $sql =   "SELECT customer_order.*, customer.* ,inventory.*
+     FROM customer_order JOIN customer ON customer.C_id= customer_order.C_id 
+     JOIN inventory ON inventory.P_id= customer_order.P_id  WHERE customer_order.U_id = ?";
      $stmt = mysqli_stmt_init($conn);
      if (!mysqli_stmt_prepare($stmt, $sql)) {
          echo "<script>console.log('error bro')</script>";
@@ -54,9 +55,8 @@ $result=0;
                      </div>
                                 <div class='product-desc'  >
                                 
-                                <h1 class='p-name' > {$row['P_id']}  </h1>
-                                <h3 class='desc'>Order : {$row['P_quantity']}</h3>
-                                <h3 class='desc'>Order Address: {$row['P_sellingprice']}</h3>
+                                <h1 class='p-name' > {$row['C_name']}  </h1>
+                                <h3 class='desc'>TotalPrice: {$row['O_totalprice']}</h3>
 
 
                             </div>

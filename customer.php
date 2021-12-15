@@ -17,7 +17,7 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
 
      require_once 'db.php';
      echo ("<script>console.log('PHP: " . $username . "');</script>");
- 
+ $result=0;
      $sql = "SELECT  `C_id`,`C_name`, `C_surname`, `C_email`, `C_number`, `C_address`, `U_id` FROM `customer` where U_id= ?";
  
      $stmt = mysqli_stmt_init($conn);

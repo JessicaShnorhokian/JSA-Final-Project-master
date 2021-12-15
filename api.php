@@ -56,6 +56,7 @@ function getGain($conn, $userid)
     
 }
 
+
 function getCustomerNumber($conn, $userid)
 {
 
@@ -108,6 +109,39 @@ function getQuantity($conn, $userid, $productID)
 
     
 }
+function getSoldQuantity($conn, $userid, $productID)
+{
+
+    $sql="SELECT * FROM sold_items where U_id = $userid and P_id = $productID";
+    $result = mysqli_query($conn, $sql);
+    
+    print_r($result);
+   
+    while ($row = mysqli_fetch_assoc($result))
+    { 
+       return $row['P_quantity'];
+    }
+    print_r($row);
+
+    
+}
+
+function getPname($conn, $userid, $productID)
+{
+
+    $sql="SELECT * FROM inventory where U_id = $userid and P_id = $productID";
+    $result = mysqli_query($conn, $sql);
+    
+    print_r($result);
+   
+    while ($row = mysqli_fetch_assoc($result))
+    { 
+       return $row['p_name'];
+    }
+    print_r($row);
+
+    
+}
 function getSellingPrice($conn, $userid, $productID)
 {
 
@@ -152,7 +186,8 @@ function createProduct($conn, $name, $quantity, $costperitem, $sellingprice, $fi
 function createOrder($conn, $C_id,$P_id, $P_quantity, $O_totalprice, $O_dateoforder, $userid)
 {
 
-    $sql = "INSERT INTO customer_order(C_id,P_id, P_quantity, O_totalprice, ,O_dateoforder,U_id) VALUES (?, ?, ?, ?,?,?);";
+    
+    $sql = "INSERT INTO customer_order(C_id, O_totalprice,O_dateoforder,P_id, P_quantity,U_id) VALUES (?, ?, ?, ?,?,?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ./order.php?error=stmtfailed2");
@@ -161,7 +196,7 @@ function createOrder($conn, $C_id,$P_id, $P_quantity, $O_totalprice, $O_dateofor
     }
     
 
-    mysqli_stmt_bind_param($stmt, "iiidsi", $C_id,$P_id, $P_quantity, $O_totalprice,$O_dateoforder, $userid);
+    mysqli_stmt_bind_param($stmt, "idsiii", $C_id, $O_totalprice,$O_dateoforder, $P_id, $P_quantity,$userid);
     if (!mysqli_stmt_execute($stmt)) {
         print_r(mysqli_stmt_error($stmt));
     } else {
@@ -174,6 +209,7 @@ function addSoldItem($conn, $P_id, $P_quantity, $userid)
 
     $sql = "INSERT INTO sold_items(P_id, P_quantity, U_id) VALUES (?, ?,  ?);";
     $stmt = mysqli_stmt_init($conn);
+
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ./order.php?error=stmtfailed2");
 
@@ -256,7 +292,7 @@ function deleteOrder($conn, $oid, $u_id)
 
     $row = oidExists($conn, $oid, $u_id);
 
-    $sql = "DELETE FROM orderclass WHERE O_id=? and U_id=?";
+    $sql = "DELETE FROM customer_order WHERE O_id=? and U_id=?";
     $stmt = $conn->stmt_init();
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ./order.php?error=stmtfailed2");
@@ -297,6 +333,28 @@ function uidExists($conn, $username)
 function pidExists($conn, $p_id,$u_id)
 {
     $sql = "SELECT * FROM inventory WHERE P_id = ? and U_id=?;";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ./index.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "ii", $p_id,$u_id);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+        return $row;
+    } else {
+        $result = false;
+        return $result;
+    }
+
+    mysqli_stmt_close($stmt);
+}
+function productExists($conn, $p_id,$u_id)
+{
+    $sql = "SELECT * FROM sold_items WHERE P_id = ? and U_id=?;";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ./index.php?error=stmtfailed");
@@ -554,7 +612,27 @@ function updateQuantity($conn, $p_id, $u_id, $quantity)
     mysqli_stmt_bind_param($stmt, 'iii', $quantity, $u_id,$p_id);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
-    exit();
+
+}
+function updatesolditem($conn, $p_id, $u_id, $quantity)
+{
+    $row=pidExists($conn, $p_id,$u_id);
+
+   
+    if(empty($quantity)){
+        $quantity=$row['p_quantity'];
+    }
+   
+    $sql="UPDATE sold_items SET P_quantity=? where U_id=? and P_id=?";
+    $stmt=mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql))
+    {
+        header("location: ./homepage.php?error=smtngfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, 'iii', $quantity, $u_id,$p_id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
 
 }
 function updateCustomer($conn, $cid, $u_id, $name, $surname, $email, $number, $address)
