@@ -581,10 +581,10 @@ function searchInventory($conn, $searchInput, $U_id){
                          <img src='./resources/images/{$row['p_filename']}' alt='' class='product-image'>
                                  <div class='edit'>
                                       <div class='edit-im'>
-                                <img src='./resources/images/edit.png' class='edit-button' onclick='displayUpdateForm({$row['P_id']})' alt=''>
+                                <img src='./resources/images/edit.png' class='edit-button' onclick='document.getElementById('pid1').value = {$row['P_id']}' alt=''>
                             </div>
                             <div class='edit-delete'>
-                                <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='showDeleteForm({$row['P_id']})'>
+                                <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='document.getElementById('pid').value = {$row['P_id']}})'>
                             </div>        
                             </div>
                                 <div class='product-desc'  >
@@ -604,7 +604,7 @@ function searchInventory($conn, $searchInput, $U_id){
         echo "No Results";
     }
     if($searchresult == 0){
-        echo "No Results";
+        echo "<div class='no-result'>No Results</div> ";
     }
 
 }
@@ -618,6 +618,7 @@ function searchCustomer($conn, $searchInput, $U_id){
     $searchresult=1;
     if($queryResult > 0){
         while($row = mysqli_fetch_assoc($result)){
+       
             if($row["C_name"]==-1){
                 $searchresult = 0;
                 continue;
@@ -628,10 +629,10 @@ function searchCustomer($conn, $searchInput, $U_id){
                    
                         <div class='edit'>
                                     <div class='edit-im'>
-                                        <img src='./resources/images/edit.png' class='edit-button' onclick='displayUpdateForm({$row['C_id']})' alt=''>
+                                        <img src='./resources/images/edit.png' class='edit-button' id='customer-edit' onclick='displayUpdateFormC({$row["C_id"]})' alt=''>
                                     </div>
                                     <div class='edit-delete'>
-                                        <img src='./resources/images/delete.png' class='delete-button' alt='' onclick='showDeleteForm({$row['C_id']})'>
+                                        <img src='./resources/images/delete.png' class='delete-button' id='customer-delete' alt='' onclick='document.getElementById('pid').value = {$row['C_id']}'>
                                     </div>        
                         </div>
                                     <div class='product-desc'  >
@@ -650,11 +651,40 @@ function searchCustomer($conn, $searchInput, $U_id){
     
                                     </div>
                          </div>            
-                 </div> ";
+                 </div> 
+                 
+                 <div style='position:fixed; top:50%; left:50%; transform: translate(-50%, -50%);   width: 20%;' class='fade' role='dialog' id='delete-containerC'>
+    <div class='modal-dialog modal-md'>
+
+        <div class='modal-content'>
+            <div class='modal-header'>
+
+                <h4 class='modal-title' style='color:#000000'>
+                    Delete Confirmation
+                </h4>
+            </div>
+            <div class='modal-body'>
+                <form action='cdelete.php' method='post' id='delete-form' >
+                <div class='form-group' id='delete-buttons'>
+                <input type='number' name='C_id' id='pid' form='delete-form' class = 'username' value=''>
+                        <button type='submit' name='yes' id='delete-yes' class='btn btn-default'>Yes</button>
+                        <button type='cancel' name='no' id='delete-no' class='btn btn-default'>No</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+                 
+                 
+                 
+                 
+                 ";
             }
         }
     } else {
-        echo "No Results";
+        echo "<div class='no-result'>No Results</div> ";
     }
 
 }
@@ -696,7 +726,7 @@ function searchOrder($conn, $searchInput, $U_id){
         }
     } 
     else {
-        echo "No Results";
+        echo "<div class='no-result'>No Results</div> ";
     }
     
 }

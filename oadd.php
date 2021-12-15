@@ -8,7 +8,7 @@ if(isset($_POST["submit"])){
     
 session_start();
 $U_id = $_SESSION['U_id'];
-//echo("<script>console.log('PHP: " . $username . "');</script>");
+
 
     require_once 'db.php';
     require_once 'api.php';
@@ -29,16 +29,7 @@ $U_id = $_SESSION['U_id'];
         
         $newQuantity = $quant-$P_quantity;
             updateQuantity($conn,$P_id,$U_id,$newQuantity);
-            
-          //createOrder($conn, $P_id, $P_quantity,1, $U_id);
-
     }
-  
-
-        
-
-    
-    
 }else if (isset($_POST["cancel"])){ 
     header("location: order.php?ordercanceled");
     exit(); 
