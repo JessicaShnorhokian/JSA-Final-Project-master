@@ -7,6 +7,7 @@ if(isset($_POST["submit"])){
     $C_id= $_POST["customer"];
     $O_dateoforder= $_POST["date"];
 
+
     
 session_start();
 $U_id = $_SESSION['U_id'];
@@ -27,7 +28,7 @@ $U_id = $_SESSION['U_id'];
     {
             
             echo"<script>window.alert('Quantity not enough, decrease quantity')</script>";
-            header("location: order.php?ordercanceled");
+            header("location: order.php?orderqunatity");
             
         
     }else{
@@ -52,11 +53,11 @@ $U_id = $_SESSION['U_id'];
    
 
         }
-        print_r($O_dateoforder);
-        exit();
-            createOrder($conn,$C_id,$totalPrice,$O_dateoforder,$P_id,$P_quantity,$U_id);
+       
+        
+        createOrder($conn,$C_id,$totalPrice,$O_dateoforder,$P_id,$P_quantity,$U_id);
 
-        header("location: order.php?ordercanceled");
+        header("location: order.php?orderaccepted");
 
             
 

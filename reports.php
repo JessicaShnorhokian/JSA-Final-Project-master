@@ -32,10 +32,13 @@ $gains = getGain($conn,$U_id);
 
 $costs= getCost($conn,$U_id);
 $nofCustomer = getCustomerNumber($conn,$U_id);
+if($nofCustomer!=0){
 $nofCustomer = $nofCustomer -1;
+}
 $nofOrder = getOrderNumber($conn,$U_id);
+if($nofOrder){
 $nofOrder = $nofOrder -1;
-
+}
 $result = $gains - $costs;
 if ($result>0)
 {

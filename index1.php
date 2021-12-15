@@ -27,7 +27,7 @@
 
                     <input type="text" class="fillables" id="address" name="address" placeholder="Address Line" required>
 
-                    <input type="number" id="telnumber"  name="number" class="fillables"  placeholder="Phone Number" required>
+                    <input type="tel" id="telnumber" pattern="[0-9]{2}-[0-9]{6}" name="number" class="fillables"  placeholder="Phone Number 00-000000" required>
 
                     <input type="email" id="username" class="fillables" name="email" placeholder="Email" required>
 

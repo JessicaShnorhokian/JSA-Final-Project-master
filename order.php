@@ -147,7 +147,24 @@ $result=0;
                     </div>
                     <div>
                     <div class="form-group">
-                        <input type="date" class="form-control" name="date" style="width:100%"  placeholder="Enter date" required>
+                        <input type="date" id="datefield" class="form-control" name="date" style="width:100%"  placeholder="Enter date" required>
+                        <script>
+                            var today = new Date();
+                            var dd = today.getDate();
+                            var mm = today.getMonth() + 1; //January is 0!
+                            var yyyy = today.getFullYear();
+
+                                if (dd < 10) {
+                                dd = '0' + dd;
+                                }
+
+                                if (mm < 10) {
+                                mm = '0' + mm;
+                                } 
+                                    
+                                today = yyyy + '-' + mm + '-' + dd;
+                                document.getElementById("datefield").setAttribute("max", today);
+                        </script>
                     </div>
                             
                     </div>

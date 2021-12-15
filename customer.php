@@ -109,7 +109,7 @@ echo ("<script>console.log('PHP: " . $username . "');</script>");
                         <input type="email" class="form-control" name="email" style="width:100%" placeholder="Enter customer email!" required>
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control" name="number" style="width:100%" placeholder="Enter customer number!" required>
+                        <input type="tel" pattern="[0-9]{2}-[0-9]{6}" class="form-control" name="number" style="width:100%" placeholder="Enter customer number! 00-000000" required>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="address" style="width:100%" placeholder="Enter customer address!" required>

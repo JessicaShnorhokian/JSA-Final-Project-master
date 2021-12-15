@@ -97,13 +97,13 @@ function getQuantity($conn, $userid, $productID)
     $sql="SELECT * FROM inventory where U_id = $userid and P_id = $productID";
     $result = mysqli_query($conn, $sql);
     
-    print_r($result);
+   
    
     while ($row = mysqli_fetch_assoc($result))
     { 
        return $row['p_quantity'];
     }
-    print_r($row);
+    
 
     
 }
@@ -113,13 +113,11 @@ function getSoldQuantity($conn, $userid, $productID)
     $sql="SELECT * FROM sold_items where U_id = $userid and P_id = $productID";
     $result = mysqli_query($conn, $sql);
     
-    print_r($result);
    
     while ($row = mysqli_fetch_assoc($result))
     { 
        return $row['P_quantity'];
     }
-    print_r($row);
 
     
 }
@@ -130,13 +128,11 @@ function getPname($conn, $userid, $productID)
     $sql="SELECT * FROM inventory where U_id = $userid and P_id = $productID";
     $result = mysqli_query($conn, $sql);
     
-    print_r($result);
    
     while ($row = mysqli_fetch_assoc($result))
     { 
        return $row['p_name'];
     }
-    print_r($row);
 
     
 }
@@ -146,13 +142,11 @@ function getSellingPrice($conn, $userid, $productID)
     $sql="SELECT * FROM inventory where U_id = $userid and P_id = $productID";
     $result = mysqli_query($conn, $sql);
     
-    print_r($result);
    
     while ($row = mysqli_fetch_assoc($result))
     { 
        return $row['p_sellingprice'];
     }
-    print_r($row);
 
     
 }
@@ -181,20 +175,24 @@ function createProduct($conn, $name, $quantity, $costperitem, $sellingprice, $fi
         header("location: ./homepage.php");
     }
 }
-function createOrder($conn, $C_id,$P_id, $P_quantity, $O_totalprice, $O_dateoforder, $userid)
+function createOrder($conn,$C_id,$O_totalprice,$O_dateoforder,$P_id,$P_quantity,$userid)
 {
 
     
-    $sql = "INSERT INTO customer_order(C_id, O_totalprice,O_dateoforder,P_id, P_quantity,U_id) VALUES (?, ?, ?, ?,?,?);";
+    $sql = "INSERT INTO customer_order(C_id, O_totalprice,O_dateoforder, P_id, P_quantity,U_id) VALUES (?, ?, ?, ?,?,?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ./order.php?error=stmtfailed2");
 
         exit();
     }
+    print_r($O_dateoforder);
+    print_r(" ");
+    $date = date($O_dateoforder);
+    print_r($date);
     
 
-    mysqli_stmt_bind_param($stmt, "idsiii", $C_id, $O_totalprice,$O_dateoforder, $P_id, $P_quantity,$userid);
+    mysqli_stmt_bind_param($stmt, "idsiii", $C_id, $O_totalprice, $date, $P_id, $P_quantity,$userid);
     if (!mysqli_stmt_execute($stmt)) {
         print_r(mysqli_stmt_error($stmt));
     } else {
@@ -436,61 +434,61 @@ function createUser($conn, $name, $surname, $number, $address, $email, $username
         print_r(mysqli_stmt_error($stmt));
     } else {
         mysqli_stmt_close($stmt);
-//         $useridresult = mysqli_query($conn, "SELECT U_id FROM user ORDER BY U_id DESC LIMIT 1");
-//         $obj = mysqli_fetch_object($useridresult);
-//         $U_id = $obj->U_id;
-//         $U_id = $U_id+1;
-//         $emptyvar = "empty";
-//         $emptynum = -1;
-//     //inserting into inventory
-//     $inventorysql = "INSERT INTO inventory(P_name, p_quantity, p_costperitem, p_sellingprice,p_filename,U_id) VALUES (?, ?, ?, ?, ?,?);";
-//     $inventorystmt = mysqli_stmt_init($conn);
-//     if (!mysqli_stmt_prepare($inventorystmt, $inventorysql)){
-//         header("location: ./index.php?error=stmtfailed3");
-//         exit();
-//     }
-//     mysqli_stmt_bind_param($inventorystmt, "sssssi", $emptyvar, $emptyvar, $emptyvar,$emptyvar, $emptyvar,$U_id);
-//     if (!mysqli_stmt_execute($inventorystmt)) {
-//         print_r(mysqli_stmt_error($inventorystmt));
-//     } else {
-//         mysqli_stmt_close($inventorystmt);
+        $useridresult = mysqli_query($conn, "SELECT U_id FROM user ORDER BY U_id DESC LIMIT 1");
+        $obj = mysqli_fetch_object($useridresult);
+        $U_id = $obj->U_id;
+        $U_id = $U_id+1;
+        $emptyvar = "empty";
+        $emptynum = -1;
+    //inserting into inventory
+    $inventorysql = "INSERT INTO inventory(P_name, p_quantity, p_costperitem, p_sellingprice,p_filename,U_id) VALUES (?, ?, ?, ?, ?,?);";
+    $inventorystmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($inventorystmt, $inventorysql)){
+        header("location: ./index.php?error=stmtfailed3");
+        exit();
+    }
+    mysqli_stmt_bind_param($inventorystmt, "sssssi", $emptyvar, $emptyvar, $emptyvar,$emptyvar, $emptyvar,$U_id);
+    if (!mysqli_stmt_execute($inventorystmt)) {
+        print_r(mysqli_stmt_error($inventorystmt));
+    } else {
+        mysqli_stmt_close($inventorystmt);
     
-//          //inserting into sold items
-//     $SoldItemsSql = "INSERT INTO sold_items(P_id, P_quantity, U_id) VALUES (-1, -1,{$U_id});";
-//     if (!mysqli_query($conn, $SoldItemsSql)) {
-//         header("location: ./index.php?error=stmtfailed5");
-//       exit();
-//     } else {
-//         echo "<script>console.log(New record created successfully)</script>";
-//         //inserting into order class
-//         $OrderClassSql = "INSERT INTO orderclass(P_id, P_quantity, P_sellingprice, U_id) VALUES (-1, -1, -1,{$U_id});";
-//     if (!mysqli_query($conn, $OrderClassSql)) {
-//         header("location: ./index.php?error=stmtfailed6");
-//       exit();
-//     } else {
-//         echo "<script>console.log(New record created successfully)</script>";
+         //inserting into sold items
+    $SoldItemsSql = "INSERT INTO sold_items(P_id, P_quantity, U_id) VALUES (-1, -1,{$U_id});";
+    if (!mysqli_query($conn, $SoldItemsSql)) {
+        header("location: ./index.php?error=stmtfailed5");
+      exit();
+    } else {
+        echo "<script>console.log(New record created successfully)</script>";
+        //inserting into order class
+        $OrderClassSql = "INSERT INTO orderclass(P_id, P_quantity, P_sellingprice, U_id) VALUES (-1, -1, -1,{$U_id});";
+    if (!mysqli_query($conn, $OrderClassSql)) {
+        header("location: ./index.php?error=stmtfailed6");
+      exit();
+    } else {
+        echo "<script>console.log(New record created successfully)</script>";
   
-//         //inserting into customer order
-//     $CustomerOrderSql = "INSERT INTO customer_order(O_id, C_id, O_totalprice, O_dateoforder, U_id) VALUES (-1, -1, -1, -1 , {$U_id});";
-//     if (!mysqli_query($conn, $CustomerOrderSql)) {
-//         header("location: ./index.php?error=stmtfailed7");
-//       exit();
-//     } else {
-//         echo "<script>console.log(New record created successfully)</script>";
+        //inserting into customer order
+    $CustomerOrderSql = "INSERT INTO customer_order(O_id, C_id, O_totalprice, O_dateoforder, U_id) VALUES (-1, -1, -1, -1 , {$U_id});";
+    if (!mysqli_query($conn, $CustomerOrderSql)) {
+        header("location: ./index.php?error=stmtfailed7");
+      exit();
+    } else {
+        echo "<script>console.log(New record created successfully)</script>";
   
-//         //inserting into customer
-//     $CustomerSql = "INSERT INTO customer(C_name, C_surname, C_email, C_number, C_address, U_id) VALUES (-1, -1, -1, -1, -1, {$U_id});";
-//     if (!mysqli_query($conn, $CustomerSql)) {
-//         header("location: ./index.php?error=stmtfailed8");
-//       exit();
-//     } else {
-//         echo "<script>console.log(New record created successfully)</script>";
-//     }
-//     }
-// }
+        //inserting into customer
+    $CustomerSql = "INSERT INTO customer(C_name, C_surname, C_email, C_number, C_address, U_id) VALUES (-1, -1, -1, -1, -1, {$U_id});";
+    if (!mysqli_query($conn, $CustomerSql)) {
+        header("location: ./index.php?error=stmtfailed8");
+      exit();
+    } else {
+        echo "<script>console.log(New record created successfully)</script>";
+    }
+    }
+}
 
-// }
-// }
+}
+}
 mysqli_close($conn);
 header("location: ./login.php?fromapi");
 }
@@ -529,7 +527,6 @@ function loginUsr($conn, $username, $pass)
 {
  
     $uidExists = uidExists($conn, $username);
-    print_r($uidExists);
  
     if ($uidExists === false) {
         header("location: ./login.php?error=wronglogin1");
@@ -703,7 +700,7 @@ function searchInventory($conn, $searchInput, $U_id){
         }
     }
     else {
-        echo "No Results";
+        echo "<div class='no-result'>No Results</div> ";
     }
     if($searchresult == 0){
         echo "<div class='no-result'>No Results</div> ";
@@ -770,13 +767,6 @@ function searchCustomer($conn, $searchInput, $U_id){
 
 }
 
-// <div class='edit-im'>
-//                                         <img src='./resources/images/edit.png' class='edit-button' id='customer-edit' onclick='displayUpdateFormC({$row["C_id"]})' alt=''>
-//                                     </div>
-//                                     <div class='edit-delete' onclick='document.getElementById('pid').value = '{$row["C_id"]}'>
-//                                         <img src='./resources/images/delete.png' class='delete-button' id='customer-delete' alt='' onclick='document.getElementById('pid').value = '{$row["C_id"]}''>
-//                                     </div> 
-
 
 function searchOrder($conn, $searchInput, $U_id){
     $search = mysqli_real_escape_string($conn, $searchInput);
@@ -812,7 +802,7 @@ function searchOrder($conn, $searchInput, $U_id){
     
 }
 if($searchresult == 1){
-    echo "No Results";
+    echo "<div class='no-result'>No Results</div>";
 }
 }
 
