@@ -41,17 +41,20 @@ $U_id = $_SESSION['U_id'];
             $soldquant = getSoldQuantity($conn,$U_id,$P_id);
             $newsoldquant= $soldquant + $P_quantity;
             updatesolditem($conn,$P_id,$U_id,$newsoldquant);
-            createOrder($conn,$C_id,$totalPrice,$O_dateoforder,$P_id,$P_quantity,$U_id);
+           // createOrder($conn,$C_id,$totalPrice,$O_dateoforder,$P_id,$P_quantity,$U_id);
             
 
         }
         else
         {
             addSoldItem($conn,$P_id,$P_quantity,$U_id);      
-            createOrder($conn,$C_id,$totalPrice,$O_dateoforder,$P_id,$P_quantity,$U_id);
 
    
+
         }
+        print_r($O_dateoforder);
+        exit();
+            createOrder($conn,$C_id,$totalPrice,$O_dateoforder,$P_id,$P_quantity,$U_id);
 
         header("location: order.php?ordercanceled");
 
