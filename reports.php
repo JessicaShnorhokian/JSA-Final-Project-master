@@ -286,14 +286,14 @@ drawMaterialChart();
       <div id="chart_div1" style="margin-top:100px;float:right;width: 100%; height: 450px;"></div>
     </td>
     <td>
-      <div id="piechart" style="margin-top:100px;float:right"></div>
+      <div id="piechart" style="margin-top:100px;float:right" ></div>
 
     </td>
   </tr>
 </table>
 
 
-<div id="chart_div" style="width: 100%; height: 400px;"></div>
+<div id="chart_div" style="width: 100%; height: 400px;margin-left: 6%;"></div>
 <br>
 
 

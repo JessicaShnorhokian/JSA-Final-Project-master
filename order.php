@@ -56,7 +56,8 @@ $result=0;
                                 <div class='product-desc'  >
                                 
                                 <h1 class='p-name' > {$row['C_name']}  </h1>
-                                <h3 class='desc'>TotalPrice: {$row['O_totalprice']}</h3>
+                                <h3 class='desc'>Total Price: {$row['O_totalprice']}</h3>
+                                <h3 class='desc'>Date of order: {$row['O_dateoforder']}</h3>
 
 
                             </div>

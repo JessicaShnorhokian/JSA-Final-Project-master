@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php 
+include_once 'db.php';
+include_once 'api.php';
+session_start();
+$U_id = $_SESSION['U_id'];
+$storename=getStoreName($conn,$U_id);
+?>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,7 +23,9 @@
                 <input type="checkbox" id="nav-check">
                 <div class="nav-header">
                     <div class="nav-title">
-                        Store Name
+                        <?php 
+echo "$storename"
+?>
                     </div>
 
                 </div>

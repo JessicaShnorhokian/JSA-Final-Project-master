@@ -107,6 +107,22 @@ function getQuantity($conn, $userid, $productID)
 
     
 }
+function getStoreName($conn, $userid)
+{
+
+    $sql="SELECT * FROM user where U_id = $userid ";
+    $result = mysqli_query($conn, $sql);
+    
+   
+   
+    while ($row = mysqli_fetch_assoc($result))
+    { 
+       return $row['U_storename'];
+    }
+    
+
+    
+}
 function getSoldQuantity($conn, $userid, $productID)
 {
 
@@ -543,6 +559,7 @@ function loginUsr($conn, $username, $pass)
     } else if ($checkPwd === true) {
         session_start();
         $_SESSION["U_id"] = $uidExists["U_id"];
+    
         $_SESSION["username"] = $uidExists["U_username"];
         $_SESSION['username'] = $username;
         $userid = $username;

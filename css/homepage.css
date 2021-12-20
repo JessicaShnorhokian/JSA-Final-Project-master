@@ -67,8 +67,8 @@
     position: relative;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: minmax(27rem, auto);
-    grid-auto-rows: 27rem;
+    grid-template-rows: minmax(15rem, auto);
+    grid-auto-rows: 15rem;
     grid-auto-columns: minmax(60%, auto);
 
 }
