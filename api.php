@@ -23,6 +23,78 @@ function pwdMatch($pwd, $pwdRepeat)
     return false;
 }
 
+//getCost
+
+//getGains
+function  saleperitem($conn, $item,$userid)
+{
+    $sql = " SELECT SUM(P_quantity) FROM sold_items WHERE P_id= $item and U_id= $userid ;";
+    $result = mysqli_query($conn,$sql);
+
+    return $result ;
+}
+
+function  gains($conn, $userid)
+{
+    $sql = " SELECT SUM(O_totalprice) FROM customer_order WHERE U_id= $userid ;";
+    $result = mysqli_query($conn,$sql);
+
+    return $result ;
+}
+
+
+function getGain($conn, $userid)
+{
+
+    $sql="SELECT sum(O_totalprice) as total FROM customer_order where U_id = $userid";
+
+    $result = mysqli_query($conn, $sql);
+    while ($row = mysqli_fetch_assoc($result))
+    { 
+       return $row['total'];
+    }
+    
+}
+
+function getCustomerNumber($conn, $userid)
+{
+
+    $sql="SELECT count(C_id) as total FROM customer where U_id = $userid";
+
+    $result = mysqli_query($conn, $sql);
+    while ($row = mysqli_fetch_assoc($result))
+    { 
+       return $row['total'];
+    }
+    
+}
+function getOrderNumber($conn, $userid)
+{
+
+    $sql="SELECT count(O_id) as total FROM customer_order where U_id = $userid";
+
+    $result = mysqli_query($conn, $sql);
+    while ($row = mysqli_fetch_assoc($result))
+    { 
+       return $row['total'];
+    }
+    
+}
+function getCost($conn, $userid)
+{
+
+    $sql="SELECT sum(p_costperitem) as total FROM inventory where U_id = $userid";
+
+    $result = mysqli_query($conn, $sql);
+    while ($row = mysqli_fetch_assoc($result))
+    { 
+       return $row['total'];
+    }
+    
+}
+
+
+
 
 function createProduct($conn, $name, $quantity, $costperitem, $sellingprice, $filename,$userid)
 {
@@ -34,15 +106,36 @@ function createProduct($conn, $name, $quantity, $costperitem, $sellingprice, $fi
 
         exit();
     }
-    print_r($stmt);
+    
 
-    mysqli_stmt_bind_param($stmt, "ssssss", $name, $quantity, $costperitem, $sellingprice, $filename,$userid);
+    mysqli_stmt_bind_param($stmt, "sssssi", $name, $quantity, $costperitem, $sellingprice, $filename,$userid);
     if (!mysqli_stmt_execute($stmt)) {
         print_r(mysqli_stmt_error($stmt));
     } else {
 
         mysqli_stmt_close($stmt);
         header("location: ./homepage.php");
+    }
+}
+function createOrder($conn, $P_id, $P_quantity, $P_sellingprice, $userid)
+{
+
+    $sql = "INSERT INTO orderclass(P_id, P_quantity, P_sellingprice, U_id) VALUES (?, ?, ?, ?);";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ./order.php?error=stmtfailed2");
+
+        exit();
+    }
+    
+
+    mysqli_stmt_bind_param($stmt, "iids", $P_id, $P_quantity, $P_sellingprice, $userid);
+    if (!mysqli_stmt_execute($stmt)) {
+        print_r(mysqli_stmt_error($stmt));
+    } else {
+
+        mysqli_stmt_close($stmt);
+        header("location: ./order.php?error=none");
     }
 }
 
@@ -53,11 +146,11 @@ function createCustomer($conn, $name, $surname, $email, $number, $address, $user
     $sql = "INSERT INTO customer(C_name, C_surname, C_email, C_number, C_address, U_id) VALUES (?, ?, ?, ?, ?, ?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../index.php?error=stmtfailed2");
+        header("location: ./customer.php?error=stmtfailed2");
 
         exit();
     }
-    print_r($stmt);
+
 
     mysqli_stmt_bind_param($stmt, "ssssss", $name, $surname, $email, $number, $address, $userid);
     if (!mysqli_stmt_execute($stmt)) {
@@ -65,19 +158,25 @@ function createCustomer($conn, $name, $surname, $email, $number, $address, $user
     } else {
 
         mysqli_stmt_close($stmt);
-        header("location: ../index.php?error=none");
+        header("location: ./customer.php?error=none");
     }
 }
 
-function deleteCustomer($conn, $customername)
+function deleteCustomer($conn, $cid, $u_id)
 {
 
-    $cidExists = cidExists($conn, $customername);
+    $row = cidExists($conn, $cid, $u_id);
 
-    $sql = "DELETE FROM customer WHERE C_id=? ";
+    $sql = "DELETE FROM customer WHERE C_id=? and U_id=?";
     $stmt = $conn->stmt_init();
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $cidExists);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ./customer.php?error=stmtfailed2");
+        
+    }
+    $stmt->bind_param('ii', $cid, $u_id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ./customer.php?error=none");
 }
 
 function deleteProduct($conn, $P_id, $U_id)
@@ -89,7 +188,7 @@ function deleteProduct($conn, $P_id, $U_id)
         header("location: ./homepage.php?error=stmtfailed2");
         exit();
     }
-    mysqli_stmt_bind_param($stmt, 'ss', $P_id, $U_id);
+    mysqli_stmt_bind_param($stmt, 'ii', $P_id, $U_id);
     mysqli_stmt_execute($stmt);
 
 
@@ -149,15 +248,15 @@ function pidExists($conn, $p_id,$u_id)
 }
 
 
-function cidExists($conn, $customername)
+function cidExists($conn, $cid, $uid)
 {
-    $sql = "SELECT * FROM customer WHERE C_name = ? ;";
+    $sql = "SELECT * FROM customer WHERE C_id = ? and U_id = ? ;";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ./index.php?error=stmtfailed");
         exit();
     }
-    mysqli_stmt_bind_param($stmt, "s", $customername);
+    mysqli_stmt_bind_param($stmt, "ii", $cid, $uid);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
@@ -283,10 +382,9 @@ function loginUsr($conn, $username, $pass)
 function updateProduct($conn, $p_id,$u_id, $name, $quantity, $costperitem ,$sellingprice,$filename)
 {
     $row=pidExists($conn, $p_id,$u_id);
+
     if(empty($name)){
-
         $name=$row['P_name'];
-
     }
 
     if(empty($quantity)){
@@ -300,9 +398,11 @@ function updateProduct($conn, $p_id,$u_id, $name, $quantity, $costperitem ,$sell
     }
 
     if(empty($filename)){
-        $filename=$row["P_filename"];  
+        $filename=$row["p_filename"];  
     }
-    $sql="UPDATE inventory SET P_name=? , p_quantity=?, p_costperitem=?, p_sellingprice=?, P_filename=? where U_id=? and P_id=?";
+    debug_to_console($filename);
+
+    $sql="UPDATE inventory SET P_name=? , p_quantity=?, p_costperitem=?, p_sellingprice=?, p_filename=? where U_id=? and P_id=?";
     $stmt=mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$sql))
     {
@@ -313,6 +413,43 @@ function updateProduct($conn, $p_id,$u_id, $name, $quantity, $costperitem ,$sell
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     header("location: ./homepage.php?error=none");
+    exit();
+
+}
+function updateCustomer($conn, $cid, $u_id, $name, $surname, $email, $number, $address)
+{
+    $row=cidExists($conn, $cid, $u_id);
+    
+    if(empty($name)){
+        $name=$row['C_name'];
+    }
+
+    if(empty($surname)){
+        $surname=$row['C_surname'];
+    }
+    if(empty($email)){
+        $email=$row["C_email"];
+    }
+    if(empty($number)){
+        $number=$row["C_number"];  
+    }
+
+    if(empty($address)){
+        $address=$row["C_address"];  
+    }
+   
+
+    $sql="UPDATE customer SET C_name=? , C_surname=?, C_email=?, C_number=?, C_address=? where U_id=? and C_id=?";
+    $stmt=mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql))
+    {
+        header("location: ./customer.php?error=smtngfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, 'sssssii', $name, $surname,$email,$number,$address,$u_id,$cid);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ./customer.php?error=none");
     exit();
 
 }

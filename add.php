@@ -29,8 +29,8 @@ $U_id = $_SESSION['U_id'];
 
     
     
-}else{
-    header("location: index.php");
+}else if (isset($_POST["cancel"])){ 
+    header("location: homepage.php");
     exit(); 
 }
 ?>

@@ -4,41 +4,47 @@
 }
 
 .edit>div {
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
 }
 
 .edit-delete {
     position: absolute;
-    bottom: 4%;
+    bottom: 6%;
     right: 4%;
 }
 
-#edit-product {
+#delete-container {
     display: none;
-    position: fixed;
-    /* Stay in place */
+    position: fixed relative;
     z-index: 1;
-    /* Sit on top */
-    left: 20%;
-    top: 20%;
-    width: 20%;
-    /* Full width */
-    height: 20%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
-    padding-top: 60px;
+    left: 30%;
+    top: 30%;
+    width: fit-content;
+    min-height: fit-content;
+    color: #000;
+    background-color: #fff;
 }
 
-.edit-img {
+#delete-container>h1 {
+    font-size: 1.4rem;
+}
+
+#delete-container>button {
+    left: 30%;
+    top: 30%;
+    bottom: 0.4rem;
+}
+
+.username {
+    display: none;
     position: absolute;
-    bottom: 4%;
-    right: 12%;
+}
+
+.edit-im {
+    position: absolute;
+    bottom: 6%;
+    right: 16%;
 }
 
 .edit>div :hover {
@@ -59,14 +65,16 @@
     position: relative;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 100%;
-    grid-auto-rows: 100%;
+    grid-template-rows: minmax(15rem, auto);
+    grid-auto-rows: auto;
     grid-auto-columns: minmax(60%, auto);
+
 }
 
 .p-name {
     font-family: inherit;
     font-style: normal;
+    max-width: 2rem;
     font-weight: 700;
     color: var(--token-05828702-56c4-4b7f-843e-eab3a79a0bd7, rgb(0, 0, 0));
     letter-spacing: -0.3px;
@@ -74,6 +82,12 @@
     margin-bottom: 10%;
 }
 
+
+#sname{
+    position: absolute;
+    top: 0;
+    right: 66%;
+}
 .desc {
     color: #7c7a7a;
     font-size: 80%;
@@ -96,6 +110,7 @@
     background-color: #e0ccfc;
     margin: 8%;
     padding-bottom: 1%;
+    font-size: larger;
 }
 
 img {
@@ -103,19 +118,19 @@ img {
     height: 100%;
 }
 
-.float{
-	position:fixed;
-	width:60px;
-	height:60px;
-	bottom:40px;
-	right:40px;
-	background-color:#7105ff;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
+.float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #7105ff;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 2px 2px 3px #999;
 }
- 
-.my-float{
-	margin-top:20px;
+
+.my-float {
+    margin-top: 20px;
 }

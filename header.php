@@ -37,11 +37,12 @@
                     </form>
                     
                 </div>
-                <div class="nav-links">
-                    <a href="#" target="_blank">Customer</a>
-                    <a href="#" target="_blank">Inventory</a>
-                    <a href="#" target="_blank ">Orders</a>
-                    <a href="# " target="_blank ">Account</a>
+                <div class="nav-links">          
+                    <a href="homepage.php" >Inventory</a>
+                    <a href="customer.php" >Customer</a>
+                    <a href="order.php" >Orders</a>
+                    <a href="reports.php">Reports</a>
+                    <a href="# ">Account</a>
         </div>
       </div>
     </nav>
